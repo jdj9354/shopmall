@@ -12,7 +12,6 @@ class BasketLayout extends Component {
         super(props);
         this.state = {
             basketItemsArray: [],
-            numInfo: {},
             totalPrice: 0
         };
     }
@@ -31,25 +30,20 @@ class BasketLayout extends Component {
 
             basketItemsArray.push(product);
 
-            if (!numInfo[el.id])
-                numInfo[el.id] = {};
-            numInfo[el.id][el.optionName] = el.num;
+            product.num = el.num;
 
             loadCount++;
 
             if (loadCount == basketItems.length) {
                 loadCount = 0;
                 this.state.basketItemsArray = basketItemsArray;
-                this.state.numInfo = numInfo;
                 this.setState({
                     basketItemsArray: basketItemsArray,
-                    numInfo: numInfo,
                     totalPrice:totalPrice
                 },() => {
                     totalPrice = this.getTotalPrice();
                     this.setState({
                         basketItemsArray: basketItemsArray,
-                        numInfo : this.state.numInfo,
                         totalPrice:totalPrice
                     });
                 });
@@ -158,16 +152,20 @@ class BasketLayout extends Component {
                                         </td>
                                         <td>
                                             <input class="item_number" type="number"
-                                                   value={this.state.numInfo[el._id][el.optionName]}
+                                                   value={el.num}
                                                    onInput={(node) => {
                                                        if (node.target.value <= 0) {
                                                            window.alert("1개 이상의 수량을 지정하여야 합니다");
                                                            node.target.value = 1;
                                                        }
                                                        let stateUpdate = {};
-                                                       stateUpdate.numInfo = this.state.numInfo;
                                                        let rowNode = node.target.parentElement.parentElement;
-                                                       stateUpdate.numInfo[rowNode.dataset.id][rowNode.dataset.option_name] = node.target.value;
+                                                       for(let i = 0 ; i< this.state.basketItemsArray.length; i++ ){
+                                                           let basketItem = this.state.basketItemsArray[i];
+                                                           if(basketItem._id == rowNode.dataset.id && basketItem.optionName == rowNode.dataset.option_name){
+                                                               basketItem.num = node.target.value;
+                                                           }
+                                                       }
                                                        stateUpdate.basketItemsArray = this.state.basketItemsArray;
                                                        stateUpdate.totalPrice = this.state.totalPrice;
                                                        console.log(stateUpdate);
@@ -175,7 +173,6 @@ class BasketLayout extends Component {
                                                            let totalPrice = this.getTotalPrice();
                                                            this.setState({
                                                                basketItemsArray : this.state.basketItemsArray,
-                                                               numInfo : this.state.numInfo,
                                                                totalPrice:totalPrice
                                                            });
                                                        });
@@ -284,7 +281,7 @@ class BasketLayout extends Component {
                 for(let option in basketItemArray[i].options){
                     if(basketItemArray[i].options[option].name == checkboxes[i].parentElement.parentElement.dataset.option_name){
                         curItemPrice += parseInt(basketItemArray[i].options[option].priceChange);
-                        curItemPrice *= parseInt(this.state.numInfo[basketItemArray[i]._id][basketItemArray[i].options[option].name]);
+                        curItemPrice *= parseInt(basketItemArray[i].num);
                         break;
                     }
                 }
