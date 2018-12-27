@@ -1,3 +1,5 @@
+@import "../../../App.css";
+
 @media all and (min-width: 480px) {
     .Login {
         padding: 60px 0;
@@ -5,6 +7,50 @@
 
     .Login form {
         margin: 0 auto;
-        max-width: 320px;
+        width: 15%;
+    }
+
+    .Login from input {
+        display: inline-block;
+        width: 100%;
+        margin-top: 3%;
+    }
+
+    .Login form div {
+        margin-top: 10%;
+    }
+
+    .Login form a {
+        display: inline-block;
+        width: 100%;
+        cursor: pointer;
+        width: 100%;
+        font-size: 16px;
+        text-align: center;
+    }
+
+    .Login form a.on_toggle {
+        background-color: var(--main-color);
+        color: #ffffff;
+    }
+
+    .Login form a.off_toggle {
+        border: 1px solid var(--main-color);
+        background-color: white;
+        color: var(--main-color);
+        width: 100%;
+    }
+
+    .Login .sns_login_group {
+        display: inline-block;
+        margin-top: 3%;g
+        margin-left: 42.5%;
+        width: 15%;
+    }
+
+    .Login .sns_login_group img {
+        max-width: 15%;
+        padding: 2.5%;
+        cursor: pointer;
     }
 }
