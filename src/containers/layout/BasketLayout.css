@@ -1,0 +1,105 @@
+@import "../../App.css";
+
+h3 {
+    text-align: center;
+}
+
+.main_basket_contents {
+    margin-left: 20%;
+    width: 80%;
+    margin-top: 10%;
+    margin-bottom: 5%;
+    position: absolute;
+}
+
+.tb-center {
+    text-align: center;
+}
+
+#cart_table {
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+#cart_table thead {
+    display: table-header-group;
+    vertical-align: middle;
+    border-color: inherit;
+
+}
+
+#cart_table thead tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+
+#cart_table thead tr th {
+    padding: 0;
+    line-height: 49px;
+    background-color: #fff;
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #eee;
+}
+
+#cart_table tbody td, #cart_table tfoot {
+    padding: 10px 0;
+    background: 0;
+    border-bottom: 1px solid #eee;
+}
+
+#cart_table tbody td {
+    text-align: center;
+}
+
+#cart_table tbody td .item_number {
+    width: 40%;
+}
+
+#cart_table tbody td .item_delete {
+    background-color: var(--main-color);
+    color: #fff;
+    height: 3%;
+    width: 50%;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#cart_table tfoot tr td #totalPrice {
+    float: right;
+}
+
+.basketBottom {
+    margin-top: 3%;
+}
+
+.basketBottom .left {
+    float: left;
+}
+
+.basketBottom li {
+    display: inline-block;
+}
+
+.basketBottom a {
+    cursor: pointer;
+}
+
+.basketBottom a.toggle_on {
+    background-color: var(--main-color);
+    color: #fff;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.basketBottom a.toggle_off {
+    border: 1px solid var(--main-color);
+    color: var(--main-color);
+    padding: 10px;
+    font-size: 16px;
+}
+
+.basketBottom .right {
+    float: right;
+}

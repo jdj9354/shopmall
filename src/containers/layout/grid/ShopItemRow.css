@@ -1,0 +1,13 @@
+@import "../../../App.css";
+
+.itemRow {
+    white-space: nowrap;
+    overflow: hidden;
+    display: flex; /* or inline-flex */
+    flex-wrap: nowrap;
+}
+
+.itemRow > div {
+    display: inline-block;
+    margin: 10px;
+}

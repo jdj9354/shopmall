@@ -1,0 +1,47 @@
+@import "../../App.css";
+
+#shopName {
+    z-index: 100;
+    font-size: 30pt;
+    margin-left: 5%;
+    widht: 35%;
+    position: fixed;
+}
+
+#sideDiv {
+    font-size: 15pt;
+    font-weight: bold;
+    z-index: 100;
+    width: 20%;
+    margin-top: 15%;
+    position: fixed;
+}
+
+#sideDiv nav ul {
+    list-style: none;
+}
+
+#topNav {
+    position: fixed;
+    right: 0;
+}
+
+#topNav nav ul {
+    list-style: none;
+    float:right;
+    width:15%;
+}
+
+#topNav nav ul li {
+    display: inline-block;
+}
+
+#topNav li {
+    margin: 1%;
+    width: 50%;
+}
+
+#mainContent {
+    position: relative;
+    top: -70px;
+}

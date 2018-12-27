@@ -1,0 +1,21 @@
+@import "../../App.css";
+
+.process_ul {
+    text-align: center;
+}
+
+.process_ul li {
+    border: 1px solid var(--main-color);
+    color: var(--main-color);
+    display: inline-block;
+    padding-left: 1%;
+    padding-right: 1%;
+    padding-top: 0.5%;
+    padding-bottom: 0.5%;
+    margin-left: 3%;
+}
+
+.process_ul li.step_on {
+    color: #fff;
+    background: var(--main-color);
+}

@@ -1,0 +1,7 @@
+@import "../../../App.css";
+
+.itemContainer {
+    padding-top: 10%;
+    width:80%;
+    margin-left: 10%;
+}
