@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Login from "./containers/layout/login/Login"
 import MainLayout from "./containers/layout/MainLayout";
 import OrderLayout from "./containers/layout/OrderLayout"
 import BasketLayout from "./containers/layout/BasketLayout";
@@ -11,6 +12,12 @@ class App extends Component {
         return (
                 <Router>
                     <div>
+                        <Route path='/login' render={(props) =>
+                            <div>
+                                <MainLayout/>
+                                <Login/>
+                            </div>
+                        }/>
                         <Route path='/order' render={(props) =>
                             <div>
                                 <MainLayout />
