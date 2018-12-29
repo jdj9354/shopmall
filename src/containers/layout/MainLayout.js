@@ -42,7 +42,7 @@ class MainLayout extends Component {
 
             <div>
                 <div id="shopName">
-                    <h5>URTHEONLY1</h5>
+                    <a href="/"><h5>URtheONLY1</h5></a>
                 </div>
                 <div id="contentWrpper">
                     <div id={"sideDiv"}>
