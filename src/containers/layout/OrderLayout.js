@@ -117,7 +117,7 @@ class OrderLayout extends Component {
                             this.state.itemsArray.map((el) => {
                                 return (
                                     <tr className="basket_item" data-id={el._id} data-option_name={el.optionName}>
-                                        <td>
+                                        <td className="thumbNailImageCol">
                                             <img src={el.thumbnailImageSrc}/>
                                         </td>
                                         <td>

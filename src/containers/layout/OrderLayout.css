@@ -29,6 +29,10 @@ table th {
     text-align: left;
 }
 
+#cart_table tbody tr td.thumbNailImageCol img{
+    width: 100%;
+}
+
 .orderMainLayout .orderManInfo .orderManInfoTable select {
     height: 24px;
     border: 1px solid #a3a4a6;
