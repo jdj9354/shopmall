@@ -3,6 +3,7 @@ import Process from '../element/Process.js'
 import './BasketLayout.css';
 import BasketController from "../../controller/BasketController";
 import BackendController from "../../controller/BackendController";
+import {BrowserRouter as Router, Route, Link} from "react-router-dom";
 
 let beController = new BackendController();
 
@@ -20,17 +21,13 @@ class BasketLayout extends Component {
         let basketItemsArray = [];
 
         let basketItems = new BasketController().getBasketItems();
-        let numInfo = {};
-        let priceInfo = {};
         let loadCount = 0;
         let totalPrice = this.state.totalPrice;
         basketItems.map(async (el) => {
             let product = await beController.getItem(el.id);
             product.optionName = el.optionName;
-
-            basketItemsArray.push(product);
-
             product.num = el.num;
+            basketItemsArray.push(product);
 
             loadCount++;
 
@@ -39,12 +36,12 @@ class BasketLayout extends Component {
                 this.state.basketItemsArray = basketItemsArray;
                 this.setState({
                     basketItemsArray: basketItemsArray,
-                    totalPrice:totalPrice
-                },() => {
+                    totalPrice: totalPrice
+                }, () => {
                     totalPrice = this.getTotalPrice();
                     this.setState({
                         basketItemsArray: basketItemsArray,
-                        totalPrice:totalPrice
+                        totalPrice: totalPrice
                     });
                 });
 
@@ -102,9 +99,10 @@ class BasketLayout extends Component {
                                             checkboxes[i].checked = false;
                                         }
                                     }
+
                                     let totalPrice = this.getTotalPrice();
                                     this.setState({
-                                        totalPrice:totalPrice
+                                        totalPrice: totalPrice
                                     });
                                 }} type="checkbox" defaultChecked={true}/>
                             </th>
@@ -137,10 +135,10 @@ class BasketLayout extends Component {
                                 return (
                                     <tr class="basket_item" data-id={el._id} data-option_name={el.optionName}>
                                         <td>
-                                            <input class="item_checkbox" onChange={(e)=> {
+                                            <input class="item_checkbox" onChange={(e) => {
                                                 let totalPrice = this.getTotalPrice();
                                                 this.setState({
-                                                    totalPrice:totalPrice
+                                                    totalPrice: totalPrice
                                                 });
                                             }} type="checkbox" defaultChecked={true}/>
                                         </td>
@@ -160,44 +158,43 @@ class BasketLayout extends Component {
                                                        }
                                                        let stateUpdate = {};
                                                        let rowNode = node.target.parentElement.parentElement;
-                                                       for(let i = 0 ; i< this.state.basketItemsArray.length; i++ ){
+                                                       for (let i = 0; i < this.state.basketItemsArray.length; i++) {
                                                            let basketItem = this.state.basketItemsArray[i];
-                                                           if(basketItem._id == rowNode.dataset.id && basketItem.optionName == rowNode.dataset.option_name){
+                                                           if (basketItem._id == rowNode.dataset.id && basketItem.optionName == rowNode.dataset.option_name) {
                                                                basketItem.num = node.target.value;
                                                            }
                                                        }
                                                        stateUpdate.basketItemsArray = this.state.basketItemsArray;
                                                        stateUpdate.totalPrice = this.state.totalPrice;
-                                                       console.log(stateUpdate);
                                                        this.setState(stateUpdate, () => {
                                                            let totalPrice = this.getTotalPrice();
                                                            this.setState({
-                                                               basketItemsArray : this.state.basketItemsArray,
-                                                               totalPrice:totalPrice
+                                                               basketItemsArray: this.state.basketItemsArray,
+                                                               totalPrice: totalPrice
                                                            });
                                                        });
 
                                                    }
                                                    }/>
-                                    </td>
-                                <td>
-                                    0
-                                </td>
-                                <td>
-                                    {this.getProductPrice(el)} {el.priceUnit}
-                                </td>
-                                <td>
-                                    [기본배송] 조건
-                                </td>
-                                <td>
-                                    <div class="item_delete" onClick={(el) => {
-                                        new BasketController().removeBasketItem(el.target.parentElement.parentElement.dataset.id, el.target.parentElement.parentElement.dataset.option_name);
-                                        window.location.href = "/cart/";
-                                    }}>삭제
-                                    </div>
-                                </td>
-                            </tr>
-                            )
+                                        </td>
+                                        <td>
+                                            0
+                                        </td>
+                                        <td>
+                                            {this.getProductPrice(el)} {el.priceUnit}
+                                        </td>
+                                        <td>
+                                            [기본배송] 조건
+                                        </td>
+                                        <td>
+                                            <div class="item_delete" onClick={(el) => {
+                                                new BasketController().removeBasketItem(el.target.parentElement.parentElement.dataset.id, el.target.parentElement.parentElement.dataset.option_name);
+                                                window.location.href = "/cart/";
+                                            }}>삭제
+                                            </div>
+                                        </td>
+                                    </tr>
+                                )
                             })
                         }
                         </tbody>
@@ -244,10 +241,17 @@ class BasketLayout extends Component {
                                         }}>선택상품 삭제</a>
                                     </li>
                                     <li>
-                                        <a className="toggle_off">선택상품 주문</a>
+                                        <Link className="toggle_off" onClick={(ev) => {
+                                            if (this.state.finalSelectedItemsArray.length == 0) {
+                                                window.alert("1개 이상의 상품을 선택해야 합니다.");
+                                                ev.preventDefault();
+
+                                            }
+                                        }} exact to={{pathname: "/order", itemsArray: this.getFinalSelectedItem()}}> 선택상품 주문</Link>
                                     </li>
                                     <li>
-                                        <a className="toggle_on"> 전체상품 주문</a>
+                                        <Link className="toggle_on" exact
+                                              to={{pathname: "/order", itemsArray: this.state.basketItemsArray}}> 전체상품 주문</Link>
                                     </li>
                                 </ul>
 							</span>
@@ -257,19 +261,39 @@ class BasketLayout extends Component {
         )
     }
 
-    getProductPrice(product){
+    getFinalSelectedItem() {
+        let checkboxes = document.getElementsByClassName('item_checkbox');
+        this.state.finalSelectedItemsArray = [];
+
+        for (let i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked) {
+                let targetItem = null;
+                for (let j = 0; j < this.state.basketItemsArray.length; j++) {
+                    if (this.state.basketItemsArray[j]._id == checkboxes[i].parentElement.parentElement.dataset.id
+                        && this.state.basketItemsArray[j].optionName == checkboxes[i].parentElement.parentElement.dataset.option_name) {
+                        targetItem = this.state.basketItemsArray[j];
+                        break;
+                    }
+                }
+                if (targetItem != null)
+                    this.state.finalSelectedItemsArray.push(targetItem);
+            }
+        }
+        return this.state.finalSelectedItemsArray;
+    }
+
+    getProductPrice(product) {
         let optionPrice = 0;
 
-        for(let option in product.options){
-            console.log(option)
-            if(product.options[option].name == product.optionName){
+        for (let option in product.options) {
+            if (product.options[option].name == product.optionName) {
                 optionPrice += parseInt(product.options[option].priceChange);
             }
         }
         return parseInt(product.price) + optionPrice;
     }
 
-    getTotalPrice(){
+    getTotalPrice() {
         let checkboxes = document.getElementsByClassName('item_checkbox');
         let totalPrice = 0;
         let curItemPrice = 0;
@@ -278,14 +302,13 @@ class BasketLayout extends Component {
             if (checkboxes[i].checked) {
                 curItemPrice = 0;
                 curItemPrice += parseInt(basketItemArray[i].price);
-                for(let option in basketItemArray[i].options){
-                    if(basketItemArray[i].options[option].name == checkboxes[i].parentElement.parentElement.dataset.option_name){
+                for (let option in basketItemArray[i].options) {
+                    if (basketItemArray[i].options[option].name == checkboxes[i].parentElement.parentElement.dataset.option_name) {
                         curItemPrice += parseInt(basketItemArray[i].options[option].priceChange);
                         curItemPrice *= parseInt(basketItemArray[i].num);
                         break;
                     }
                 }
-                console.log(curItemPrice)
                 totalPrice += curItemPrice;
             }
         }
