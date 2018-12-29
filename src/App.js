@@ -3,9 +3,9 @@ import Login from "./containers/layout/login/Login"
 import MainLayout from "./containers/layout/MainLayout";
 import OrderLayout from "./containers/layout/OrderLayout"
 import BasketLayout from "./containers/layout/BasketLayout";
-import ShopItemGrid from "./containers/layout/grid/ShopItemGrid"
 import DetailLayout from "./containers/layout/DetailLayout";
 import {BrowserRouter as Router, Route, Link} from "react-router-dom";
+import IndexLayout from "./containers/layout/IndexLayout";
 
 class App extends Component {
     render(){
@@ -39,7 +39,7 @@ class App extends Component {
                         <Route exact path='/' render={(props) =>
                             <div>
                                 <MainLayout/>
-                                <ShopItemGrid/>
+                                <IndexLayout/>
                             </div>
                         }/>
                     </div>
