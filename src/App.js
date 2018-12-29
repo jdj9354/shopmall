@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import MainLayout from "./containers/layout/MainLayout";
+import OrderLayout from "./containers/layout/OrderLayout"
 import BasketLayout from "./containers/layout/BasketLayout";
 import ShopItemGrid from "./containers/layout/grid/ShopItemGrid"
 import DetailLayout from "./containers/layout/DetailLayout";
@@ -10,6 +11,12 @@ class App extends Component {
         return (
                 <Router>
                     <div>
+                        <Route path='/order' render={(props) =>
+                            <div>
+                                <MainLayout />
+                                <OrderLayout itemsArray={props.location.itemsArray} />
+                            </div>
+                        } />
                         <Route path='/cart' render={(props) =>
                             <div>
                                 <MainLayout />
