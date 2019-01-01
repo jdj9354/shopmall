@@ -21,7 +21,7 @@
     list-style: none;
 }
 
-.RoundedSearchBar{
+.RoundedSearchBar {
     z-index: 101;
 }
 
@@ -36,8 +36,8 @@
 
 #topNav nav ul {
     list-style: none;
-    float:right;
-    width:15%;
+    float: right;
+    width: 15%;
 }
 
 #topNav nav ul li {
@@ -47,6 +47,10 @@
 #topNav li {
     margin: 1%;
     width: 50%;
+}
+
+#topNav img {
+    width: 100%;
 }
 
 #mainContent {
