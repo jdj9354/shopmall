@@ -3,9 +3,9 @@ import Login from "./containers/layout/login/Login"
 import MainLayout from "./containers/layout/MainLayout";
 import OrderLayout from "./containers/layout/OrderLayout"
 import BasketLayout from "./containers/layout/BasketLayout";
-import ShopItemGrid from "./containers/layout/grid/ShopItemGrid"
 import DetailLayout from "./containers/layout/DetailLayout";
 import {BrowserRouter as Router, Route, Link} from "react-router-dom";
+import IndexLayout from "./containers/layout/IndexLayout";
 import Registration from "./containers/layout/login/Registration";
 
 class App extends Component {

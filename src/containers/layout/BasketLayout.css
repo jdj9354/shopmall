@@ -66,6 +66,10 @@ h3 {
     cursor: pointer;
 }
 
+#cart_table tbody tr td.thumbNailImageCol img{
+    width: 100%;
+}
+
 #cart_table tfoot tr td #totalPrice {
     float: right;
 }

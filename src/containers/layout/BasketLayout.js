@@ -142,7 +142,7 @@ class BasketLayout extends Component {
                                                 });
                                             }} type="checkbox" defaultChecked={true}/>
                                         </td>
-                                        <td>
+                                        <td className="thumbNailImageCol">
                                             <img src={el.thumbnailImageSrc}/>
                                         </td>
                                         <td>

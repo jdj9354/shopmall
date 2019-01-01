@@ -44,6 +44,10 @@
     display: inline-block;
 }
 
+#topNav nav ul li img{
+    width: 100%;
+}
+
 #topNav li {
     margin: 1%;
     width: 50%;
