@@ -3,6 +3,7 @@ import './MainLayout.css';
 import * as Constants from '../../Constants.js';
 import request from 'superagent'
 import AuthManager from "../../auth/AuthManager";
+import RoundedSearchBar from "../element/RoundedSearchBar";
 
 class MainLayout extends Component {
 
@@ -42,7 +43,7 @@ class MainLayout extends Component {
 
             <div>
                 <div id="shopName">
-                    <h5>URTHEONLY1</h5>
+                    <a href="/"><h5>URtheONLY1</h5></a>
                 </div>
                 <div id="contentWrpper">
                     <div id={"sideDiv"}>
@@ -72,6 +73,7 @@ class MainLayout extends Component {
                             </ul>
                         </nav>
                     </div>
+                    <RoundedSearchBar/>
                 </div>
             </div>
         );
