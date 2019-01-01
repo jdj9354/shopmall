@@ -1,0 +1,185 @@
+@import "../../../App.css";
+
+.Registration {
+    width: 50%;
+    margin-top: 10%;
+    margin-bottom: 10%;
+    margin-left: 30%;
+    height: 80%;
+    padding: 5%;
+    position: absolute;
+    border-radius: 8px;
+    border: 2px solid var(--main-color);
+}
+
+.Registration form {
+    position: absolute;
+    margin: 0 auto;
+    width: 80%;
+    height: 80%;
+    visibility: visible;
+}
+
+.Registration form.hide {
+    opacity: 1;
+    visibility: hidden;
+}
+
+.Registration .errorToolTip {
+    color: red;
+    display: none;
+}
+
+.Registration form input, .Registration form select {
+    padding: 3% 0;
+    font-size: 14px;
+    border-radius: 4px;
+    border: 1px solid var(--main-color);
+}
+
+.Registration .personalInfo {
+    margin-top: 5%;
+    padding-top: 5%;
+}
+
+.Registration .authField input {
+    width: 100%;
+    margin-top: 3%;
+}
+
+.Registration .nameField {
+    white-space: nowrap;
+    display: flex; /* or inline-flex */
+    flex-wrap: nowrap;
+}
+
+.Registration .nameField .rightPaddingDiv {
+    padding-right: 3%;
+}
+
+.Registration .nameField div {
+    width: 50%;
+    display: inline-block;
+}
+
+.Registration .nameField input {
+    width: 100%;
+    margin-top: 3%;
+}
+
+.Registration .phoneNumberField input {
+    width: 100%;
+    margin-top: 3%;
+}
+
+.Registration select {
+    background: none;
+    margin-top: 3%;
+    border-radius: 4px;
+    border: 1px solid var(--main-color);
+    align-items: center;
+    white-space: pre;
+    -webkit-rtl-ordering: logical;
+    color: black;
+    background-color: white;
+    cursor: default;
+}
+
+.Registration select-selected {
+    background-color: var(--main-color);
+}
+
+.Registration form .nextStep {
+    width: 100%;
+    text-align: right;
+}
+
+.Registration form .nextStep a {
+    background-color: var(--main-color);
+    color: #fff;
+    padding: 3%;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.Registration .birthdayField {
+    white-space: nowrap;
+    display: flex; /* or inline-flex */
+    flex-wrap: nowrap;
+}
+
+.Registration .birthdayField div {
+    width: 33.333333%;
+    display: inline-block;
+}
+
+.Registration .birthdayField .rightPaddingDiv {
+    padding-right: 3%;
+}
+
+.Registration .birthdayField div input {
+    width: 100%;
+    margin-top: 3%;
+}
+
+.Registration #termsOfService {
+    position: absolute;
+    margin: 0 auto;
+    width: 80%;
+    height: 60%;
+    visibility: hidden;
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    -o-transition: 0.5s;
+    transition: 0.5s;
+    opacity: 0;
+}
+
+.Registration #termsOfService.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.Registration #termsOfService .contents {
+    margin-top: 5%;
+    margin-bottom: 5%;
+    height: 100%;
+    overflow: scroll;
+}
+
+.Registration #personalInformation {
+    position: absolute;
+    margin: 0 auto;
+    width: 80%;
+    height: 60%;
+    visibility: hidden;
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    -o-transition: 0.5s;
+    transition: 0.5s;
+    opacity: 0;
+}
+
+.Registration #personalInformation.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.Registration #personalInformation .contents {
+    margin-top: 5%;
+    margin-bottom: 5%;
+    height: 100%;
+    overflow: scroll;
+}
+
+.Registration .stepDiv {
+    text-align: center;
+    display: inline-block;
+    cursor: pointer;
+    background-color: var(--main-color);
+    color: #fff;
+    margin: 1%;
+    padding: 3%;
+    width: 42%;
+    bottom: 5%;
+}
