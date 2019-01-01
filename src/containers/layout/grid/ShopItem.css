@@ -1,5 +1,9 @@
 @import "../../../App.css";
 
-div.shopItemInfo img {
+.ShopItem {
+    cursor: pointer;
+}
+
+.ShopItem img {
     width: 100%;
 }
