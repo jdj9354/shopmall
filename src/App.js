@@ -49,7 +49,7 @@ class App extends Component {
                     <Route exact path='/' render={(props) =>
                         <div>
                             <MainLayout/>
-                            <ShopItemGrid/>
+                            <IndexLayout/>
                         </div>
                     }/>
                 </div>
