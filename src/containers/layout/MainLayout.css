@@ -4,7 +4,7 @@
     z-index: 100;
     font-size: 30pt;
     margin-left: 5%;
-    widht: 35%;
+    width: 35%;
     position: fixed;
 }
 
@@ -21,9 +21,17 @@
     list-style: none;
 }
 
+.RoundedSearchBar{
+    z-index: 101;
+}
+
 #topNav {
     position: fixed;
     right: 0;
+}
+
+#topNav nav {
+
 }
 
 #topNav nav ul {
