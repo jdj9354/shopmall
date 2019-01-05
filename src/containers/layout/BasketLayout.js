@@ -3,7 +3,8 @@ import Process from '../element/Process.js'
 import './BasketLayout.css';
 import BasketController from "../../controller/BasketController";
 import BackendController from "../../controller/BackendController";
-import {BrowserRouter as Router, Route, Link} from "react-router-dom";
+import {BrowserRouter as Router, Route, Link, Redirect} from "react-router-dom";
+import AuthManager from "../../auth/AuthManager";
 
 let beController = new BackendController();
 
@@ -247,11 +248,16 @@ class BasketLayout extends Component {
                                                 ev.preventDefault();
 
                                             }
+                                            console.log(this.getFinalSelectedItem());
+                                            localStorage.setItem("lastBasketItem", JSON.stringify(this.getFinalSelectedItem()));
+
                                         }} exact to={{pathname: "/order", itemsArray: this.getFinalSelectedItem()}}> 선택상품 주문</Link>
                                     </li>
                                     <li>
-                                        <Link className="toggle_on" exact
-                                              to={{pathname: "/order", itemsArray: this.state.basketItemsArray}}> 전체상품 주문</Link>
+                                        <Link className="toggle_on" onClick={(ev) => {
+                                            localStorage.setItem("lastBasketItem", JSON.stringify(this.state.basketItemsArray));
+
+                                        }} exact to={{pathname: "/order", itemsArray: this.state.basketItemsArray}}> 전체상품 주문</Link>
                                     </li>
                                 </ul>
 							</span>

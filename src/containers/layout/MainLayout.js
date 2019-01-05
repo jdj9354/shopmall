@@ -60,7 +60,7 @@ class MainLayout extends Component {
                             <ul>
                                 {isGuest ? (
                                     <li>
-                                        <a href="/"><img src={signinImagePath}/></a>
+                                        <a href="/login"><img src={signinImagePath}/></a>
                                     </li>
                                 ) : (
                                     <li>
