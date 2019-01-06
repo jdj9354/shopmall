@@ -23,6 +23,7 @@ class DatePicker extends Component {
             monthArr: [],
             dayArr: [],
             onChange: props.onChange,
+            validityCheck: props.validityCheck,
             onMount: props.onMount
         };
 
@@ -65,6 +66,10 @@ class DatePicker extends Component {
         })
     }
 
+    getDate() {
+        return new Date(this.state.year, this.state.month - 1, this.state.day);
+    }
+
     setYear(year) {
         this.state.year = year;
         this.setState({year: year});
@@ -105,6 +110,10 @@ class DatePicker extends Component {
         return (
             <div className='DatePicker' id={this.state.id}>
                 <select className="year" value={this.state.year} onChange={(event) => {
+                    if (this.state.validityCheck) {
+                        if (!this.state.validityCheck(event.target.value, this.state.month, this.state.day))
+                            return;
+                    }
                     this.setYear(event.target.value);
                 }}>
                     {this.state.yearArr.map((year) => {
@@ -114,6 +123,10 @@ class DatePicker extends Component {
                     })}
                 </select> 년
                 <select className="month" value={this.state.month} onChange={(event) => {
+                    if (this.state.validityCheck) {
+                        if (!this.state.validityCheck(this.state.year, event.target.value, this.state.day))
+                            return;
+                    }
                     this.setMonth(event.target.value);
                 }}>
                     {this.state.monthArr.map((month) => {
@@ -123,6 +136,10 @@ class DatePicker extends Component {
                     })}
                 </select> 월
                 <select className="day" value={this.state.day} onChange={(event) => {
+                    if (this.state.validityCheck) {
+                        if (!this.state.validityCheck(this.state.year, this.state.month, event.target.value))
+                            return;
+                    }
                     this.setDay(event.target.value)
                 }}>
                     {this.state.dayArr.map((day) => {

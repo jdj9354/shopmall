@@ -13,6 +13,16 @@ class PurchaseLayout extends Component {
         return new Date(date.setDate(date.getDate() + n));
     }
 
+    checkDateValidity(startYear, startMonth, startDay, endYear, endMonth, endDay) {
+        let startDate = new Date(startYear, startMonth, startDay);
+        let endDate = new Date(endYear, endMonth, endDay);
+
+        if (startDate > endDate)
+            return false;
+        else
+            return true;
+    }
+
     render() {
         return (
             <div className='PurchaseLayout'>
@@ -47,13 +57,27 @@ class PurchaseLayout extends Component {
                     <div className="periodPicker">
                         <DatePicker maxYear={5} ref={(startDatePicker) => {
                             window.startDatePicker = startDatePicker;
+                        }} validityCheck={(year, month, day) => {
+                            if (this.checkDateValidity(year, month, day, window.endDatePicker.getYear(), window.endDatePicker.getMonth(), window.endDatePicker.getDay()))
+                                return true;
+                            else {
+                                window.alert("시작 날짜는 종료 날짜보다 클 수 없습니다.")
+                                return false;
+                            }
                         }}/>
                         <div id="periodIndicator"> ~</div>
                         <DatePicker maxYear={5} ref={(endDatePicker) => {
                             window.endDatePicker = endDatePicker;
-                            let startDate = new Date(window.startDatePicker.getYear(), window.startDatePicker.getMonth()-1, window.startDatePicker.getDay());
+                            let startDate = window.startDatePicker.getDate();
                             let oneMonthLater = this.addMonths(startDate, 1);
                             window.endDatePicker.setDate(oneMonthLater);
+                        }} validityCheck={(year, month, day) => {
+                            if (this.checkDateValidity(window.startDatePicker.getYear(), window.startDatePicker.getMonth(), window.startDatePicker.getDay()), year, month, day)
+                                return true;
+                            else {
+                                window.alert("시작 날짜는 종료 날짜보다 클 수 없습니다.")
+                                return false;
+                            }
                         }}/>
                     </div>
                     <table id="purchaseListTable" summary="주문일자, 주문 상품 정보, 상품금액(수량), 배송비, 주문상태">
