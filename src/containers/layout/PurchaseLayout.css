@@ -1,0 +1,44 @@
+@import "../../App.css";
+
+.PurchaseLayout {
+    margin-left: 20%;
+    margin-right: 5%;
+    width: 75%;
+    margin-top: 10%;
+    margin-bottom: 5%;
+    position: absolute;
+}
+
+.PurchaseLayout .periodShortcut div {
+    display: inline-block;
+    background: var(--main-color);
+    cursor: pointer;
+    color: #fff;
+    height: 3%;
+    margin: 1%;
+    padding: 1%;
+    font-size: 16px;
+    text-align: center;
+}
+
+.PurchaseLayout .purchaseList {
+    margin-top: 5%;
+    padding: 2%;
+    border: 1px solid var(--main-color);
+    border-radius: 4px;
+}
+
+.PurchaseLayout .periodPicker {
+    margin-top: 1%;
+    margin-bottom: 3%;
+}
+
+.PurchaseLayout .periodPicker .DatePicker {
+    display: inline-block;
+}
+
+.PurchaseLayout .periodPicker #periodIndicator {
+    display: inline-block;
+    width: 5%;
+    text-align: center;
+}
