@@ -9,6 +9,8 @@ import {Redirect} from "react-router-dom";
 import IndexLayout from "./containers/layout/IndexLayout";
 import Registration from "./containers/layout/login/Registration";
 import AuthManager from "./auth/AuthManager";
+import PurchaseLayout from "./containers/layout/PurchaseLayout";
+
 
 class App extends Component {
     render() {
@@ -68,6 +70,14 @@ class App extends Component {
                         }
                     }
                     }/>
+                    <Route path='/purchaseList' render={(props) => {
+                        return (
+                            <div>
+                                <MainLayout/>
+                                <PurchaseLayout/>
+                            </div>
+                        )
+                    }}/>
                     <Route path='/cart' render={(props) =>
                         <div>
                             <MainLayout/>
