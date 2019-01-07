@@ -3,6 +3,8 @@ import './OrderLayout.css';
 import Process from "../element/Process";
 import Payment from "../element/Payment";
 import BackendController from "../../controller/BackendController";
+import AuthManager from "../../auth/AuthManager";
+import { Redirect } from "react-router-dom";
 
 let beController = new BackendController();
 
@@ -10,14 +12,16 @@ class OrderLayout extends Component {
 
     constructor(props) {
         super(props);
+
         let itemsArray;
         if (!props.itemsArray) {
-            itemsArray = JSON.parse(localStorage.getItem("lastOrderItem"));
+            itemsArray = JSON.parse(localStorage.getItem("lastBasketItem"));
             if(!itemsArray)
                 itemsArray = [];
         }
         else
             itemsArray = props.itemsArray
+
         this.state = {
             itemsArray: itemsArray,
             totalPrice: 0
@@ -48,7 +52,6 @@ class OrderLayout extends Component {
                     totalPrice: totalPrice
                 }, () => {
                     totalPrice = this.getTotalPrice();
-                    localStorage.setItem("lastOrderItem", JSON.stringify(this.state.basketItemsArray));
                     this.setState({
                         basketItemsArray: basketItemsArray,
                         totalPrice: totalPrice
@@ -294,7 +297,6 @@ class OrderLayout extends Component {
         let curItemPrice = 0;
         let basketItemArray = this.state.basketItemsArray;
         for (let i = 0; i < basketItemArray.length; i++) {
-            console.log(basketItemArray[i])
             curItemPrice = 0;
             curItemPrice += parseInt(basketItemArray[i].price);
             for (let option in basketItemArray[i].options) {
