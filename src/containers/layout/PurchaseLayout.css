@@ -54,3 +54,13 @@
     font-size: 16px;
     text-align: center;
 }
+
+.PurchaseLayout #purchaseListTable {
+    border: 1px solid #808080;
+    border-collapse: collapse;
+}
+
+.PurchaseLayout #purchaseListTable td {
+    border: 1px solid #808080;
+    text-align: center;
+}
