@@ -196,24 +196,36 @@ class PurchaseLayout extends Component {
                         {
                             this.state.orderList.map((el) => {
                                 let isFirst = true;
+                                let dateObj = new Date(el.orderDate);
+                                let dateString = dateObj.getFullYear() + "년 " + (dateObj.getMonth()+1) + "월 " + dateObj.getDate()+"일";
                                 return (
                                     el.products.map((product) => {
+                                        let productPrice = product.detail.price;
+                                        product.detail.options.forEach((optionElem) => {
+                                            if(optionElem.name == product.option){
+                                                productPrice += optionElem.priceChange;
+                                            }
+                                        });
                                         if (isFirst) {
                                             isFirst = false;
                                             return (
                                                 <tr>
-                                                    <td rowSpan={el.products.length}>{el.orderDate}</td>
-                                                    <td>{product.productId}</td>
-                                                    <td>{product.price} ({product.number})</td>
-                                                    <td rowSpan={el.products.length}>{el.shippingFee}</td>
-                                                    <td rowSpan={el.products.length}>{el.orderStatus}</td>
+                                                    <td rowSpan={el.products.length}><div>{dateString}</div></td>
+                                                    <td><img src={product.detail.thumbnailImageSrc} align="middle"/>
+                                                        {product.detail.name} / {product.option}
+                                                    </td>
+                                                    <td><div>{productPrice} {product.detail.priceUnit} ({product.number})</div></td>
+                                                    <td rowSpan={el.products.length}><div>{el.shippingFee}</div></td>
+                                                    <td rowSpan={el.products.length}><div>{el.orderStatus}</div></td>
                                                 </tr>
                                             )
                                         } else {
                                             return (
                                                 <tr>
-                                                    <td>{product.productId}</td>
-                                                    <td>{product.price} ({product.number})</td>
+                                                    <td><img src={product.detail.thumbnailImageSrc} align="middle"/>
+                                                        {product.detail.name} / {product.option}
+                                                    </td>
+                                                    <td><div>{productPrice} {product.detail.priceUnit} ({product.number})</div></td>
                                                 </tr>
                                             )
                                         }

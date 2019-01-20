@@ -62,5 +62,13 @@
 
 .PurchaseLayout #purchaseListTable td {
     border: 1px solid #808080;
+}
+
+.PurchaseLayout #purchaseListTable td div{
     text-align: center;
+}
+
+
+.PurchaseLayout #purchaseListTable td img {
+    width: 30%;
 }
