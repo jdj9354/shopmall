@@ -54,3 +54,80 @@
     font-size: 16px;
     text-align: center;
 }
+
+.PurchaseLayout #purchaseListTable {
+    border: 1px solid #808080;
+    border-collapse: collapse;
+}
+
+.PurchaseLayout #purchaseListTable tfoot tr td {
+    text-align: center;
+}
+
+.PurchaseLayout #purchaseListTable tfoot tr td div {
+    display: inline-block;
+}
+
+.PurchaseLayout #purchaseListTable tfoot tr td div div {
+    padding: 5px;
+}
+
+
+.arrow {
+    border: solid var(--main-color);
+    border-width: 0 .2em .2em 0;
+    display: inline-block;
+    padding: .20em;
+    cursor: pointer;
+}
+
+.arrow:hover {
+    border: solid var(--main-color-fifty);
+    border-width: 0 .2em .2em 0;
+}
+
+
+.arrow-right {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+}
+
+
+.arrow-left {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+}
+
+
+.PurchaseLayout #purchaseListTable tfoot tr td .footerWrapper {
+    width: 100%;
+}
+
+.PurchaseLayout #purchaseListTable tfoot .footerWrapper div div {
+    padding-left: 10px;
+    padding-right: 10px;
+    cursor: pointer;
+}
+
+.PurchaseLayout #purchaseListTable tfoot .footerWrapper div div:hover {
+    border: 1px solid var(--main-color);
+    color: var(--main-color);
+}
+
+.PurchaseLayout #purchaseListTable tfoot tr td div.selected {
+    border: 1px solid var(--main-color);
+    color: var(--main-color);
+}
+
+.PurchaseLayout #purchaseListTable td {
+    border: 1px solid #808080;
+}
+
+.PurchaseLayout #purchaseListTable td div {
+    text-align: center;
+}
+
+
+.PurchaseLayout #purchaseListTable td img {
+    width: 30%;
+}

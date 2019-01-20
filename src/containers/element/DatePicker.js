@@ -75,7 +75,7 @@ class DatePicker extends Component {
         this.setState({year: year});
         this.changeDateValue(this.state.year, this.state.month);
         if (this.state.onChange)
-            this.state.onChange(this.state.year, this.state.month, this.state.day);
+            this.state.onChange(Number(this.state.year), Number(this.state.month), Number(this.state.day));
     }
 
     setMonth(month) {
@@ -83,14 +83,14 @@ class DatePicker extends Component {
         this.setState({month: month});
         this.changeDateValue(this.state.year, this.state.month);
         if (this.state.onChange)
-            this.state.onChange(this.state.year, this.state.month, this.state.day);
+            this.state.onChange(Number(this.state.year), Number(this.state.month), Number(this.state.day));
     }
 
     setDay(day) {
         this.state.day = day;
         this.setState({day: day});
         if (this.state.onChange)
-            this.state.onChange(this.state.year, this.state.month, this.state.day);
+            this.state.onChange(Number(this.state.year), Number(this.state.month), Number(this.state.day));
     }
 
     getYear() {
