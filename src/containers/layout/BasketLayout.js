@@ -18,10 +18,10 @@ class BasketLayout extends Component {
         };
     }
 
-    componentWillMount() {
+    async componentWillMount() {
         let basketItemsArray = [];
 
-        let basketItems = new BasketController().getBasketItems();
+        let basketItems = await new BasketController().getBasketItems();
         let loadCount = 0;
         let totalPrice = this.state.totalPrice;
         basketItems.map(async (el) => {
@@ -188,8 +188,8 @@ class BasketLayout extends Component {
                                             [기본배송] 조건
                                         </td>
                                         <td>
-                                            <div class="item_delete" onClick={(el) => {
-                                                new BasketController().removeBasketItem(el.target.parentElement.parentElement.dataset.id, el.target.parentElement.parentElement.dataset.option_name);
+                                            <div class="item_delete" onClick={async (el) => {
+                                                await new BasketController().removeBasketItem(el.target.parentElement.parentElement.dataset.id, el.target.parentElement.parentElement.dataset.option_name);
                                                 window.location.href = "/cart/";
                                             }}>삭제
                                             </div>
@@ -218,23 +218,23 @@ class BasketLayout extends Component {
                         <span class="right">
                                 <ul>
                                     <li>
-                                        <a className="toggle_off" onClick={(el) => {
-                                            new BasketController().emptyBasket();
+                                        <a className="toggle_off" onClick={async (el) => {
+                                            await new BasketController().emptyBasket();
                                             window.location.href = "/";
                                         }}>장바구니 비우기</a>
                                     </li>
                                     <li>
-                                        <a className="toggle_off" onClick={(el) => {
+                                        <a className="toggle_off" onClick={async (el) => {
                                             let checkboxes = document.getElementsByClassName('item_checkbox');
 
                                             for (let i = 0; i < checkboxes.length; i++) {
                                                 if (checkboxes[i].checked) {
                                                     console.log(checkboxes[i].parentElement.parentElement.id);
-                                                    new BasketController().removeBasketItem(checkboxes[i].parentElement.parentElement.dataset.id, checkboxes[i].parentElement.parentElement.dataset.option_name);
+                                                    await new BasketController().removeBasketItem(checkboxes[i].parentElement.parentElement.dataset.id, checkboxes[i].parentElement.parentElement.dataset.option_name);
                                                 }
                                             }
 
-                                            if (new BasketController().getBasketItems().length == 0)
+                                            if (await new BasketController().getBasketItems().length == 0)
                                                 window.location.href = "/";
                                             else
                                                 window.location.href = "/cart";

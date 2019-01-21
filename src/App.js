@@ -9,10 +9,22 @@ import {Redirect} from "react-router-dom";
 import IndexLayout from "./containers/layout/IndexLayout";
 import Registration from "./containers/layout/login/Registration";
 import AuthManager from "./auth/AuthManager";
+import AuthBeforePurchase from "./containers/layout/AuthBeforePurchase";
 import PurchaseLayout from "./containers/layout/PurchaseLayout";
 
 
 class App extends Component {
+    constructor(props) {
+        super(props);
+
+        let authInfoPromise = new AuthManager().getAuthInfo();
+        authInfoPromise.then((authInfo) => {
+            this.setState(({
+                authInfo: authInfo
+            }))
+        })
+    }
+
     render() {
         return (
             <Router>
@@ -30,27 +42,26 @@ class App extends Component {
                         return (
                             <div>
                                 <MainLayout/>
-                                <Login withPurchase={true}/>
+                                <AuthBeforePurchase/>
                             </div>)
                     }}/>
                     <Route path='/login' render={(props) => {
-                        let itemsArray;
-
-                        console.log(props)
-
-                        if (props.location.itemsArray)
-                            itemsArray = props.location.itemsArray;
-                        if (props.itemsArray)
-                            itemsArray = props.itemsArray;
-
                         return (
                             <div>
                                 <MainLayout/>
-                                <Login itemsArray={itemsArray}/>
+                                <Login forwarding="/"/>
                             </div>)
                     }}/>
                     <Route path='/order' render={(props) => {
-                        let authInfo = new AuthManager().getAuthInfo();
+                        // let getAuthAsyncFunc = async () => {
+                        //     return .then((result) =>{ return result});
+                        // }
+                        if (!this.state)
+                            return;
+                        if (!this.state.authInfo)
+                            return;
+
+                        let authInfo = this.state.authInfo;
                         let noMemPurchase = false;
 
                         if (props.noMemPurchase)
@@ -60,16 +71,17 @@ class App extends Component {
 
                         if (authInfo.user == "guest" && !noMemPurchase) {
                             return (<Redirect to="/login_with_purchase"/>)
-                        }
-                        else {
+
+                        } else {
                             return (
                                 <div>
                                     <MainLayout/>
-                                    <OrderLayout itemsArray={props.location.itemsArray}/>
+                                    <OrderLayout/>
                                 </div>);
                         }
                     }
                     }/>
+
                     <Route path='/purchaseList' render={(props) => {
                         return (
                             <div>

@@ -12,8 +12,17 @@ class MainLayout extends Component {
 
         var json = {menu: []};
         this.state = {
-            data: json
+            data: json,
+            user : "guest"
         }
+
+        let authResult = new AuthManager().getAuthInfo();
+        authResult.then((authInfo) =>{
+                this.setState({user:authInfo})
+            })
+            .catch((e)=> {
+                this.setState({user:"guest"})
+            });
     }
 
     componentWillMount() {
@@ -37,8 +46,7 @@ class MainLayout extends Component {
         let cartImagePath = require('../../res/icon_cart.png');
         let myIconImagePath = require('../../res/icon_my.png');
         let signinImagePath = require('../../res/icon_signin.png');
-        let curUser = new AuthManager().getAuthInfo();
-        let isGuest = (curUser.user == "guest");
+        let isGuest = (this.state.user == "guest");
         return (
 
             <div>
