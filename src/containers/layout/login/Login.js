@@ -10,7 +10,6 @@ export default class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            withPurchase: props.withPurchase,
             email: "",
             password: "",
             forwarding: props.forwarding
