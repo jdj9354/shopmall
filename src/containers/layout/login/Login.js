@@ -84,7 +84,6 @@ export default class Login extends Component {
                     <div>
                         <a className="on_toggle" href="/registration">회원 가입</a>
                     </div>
-                    {noMemberShipBuyButton}
                 </form>
                 <div className="sns_login_group">
                     <img src={icon_fb}/>
