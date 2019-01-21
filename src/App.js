@@ -10,6 +10,8 @@ import IndexLayout from "./containers/layout/IndexLayout";
 import Registration from "./containers/layout/login/Registration";
 import AuthManager from "./auth/AuthManager";
 import AuthBeforePurchase from "./containers/layout/AuthBeforePurchase";
+import PurchaseLayout from "./containers/layout/PurchaseLayout";
+
 
 class App extends Component {
     constructor(props) {
@@ -54,12 +56,12 @@ class App extends Component {
                         // let getAuthAsyncFunc = async () => {
                         //     return .then((result) =>{ return result});
                         // }
-                        if(!this.state)
+                        if (!this.state)
                             return;
-                        if(!this.state.authInfo)
+                        if (!this.state.authInfo)
                             return;
-                        let authInfo = this.state.authInfo;
 
+                        let authInfo = this.state.authInfo;
                         let noMemPurchase = false;
 
                         if (props.noMemPurchase)
@@ -69,6 +71,7 @@ class App extends Component {
 
                         if (authInfo.user == "guest" && !noMemPurchase) {
                             return (<Redirect to="/login_with_purchase"/>)
+
                         } else {
                             return (
                                 <div>
@@ -78,6 +81,15 @@ class App extends Component {
                         }
                     }
                     }/>
+
+                    <Route path='/purchaseList' render={(props) => {
+                        return (
+                            <div>
+                                <MainLayout/>
+                                <PurchaseLayout/>
+                            </div>
+                        )
+                    }}/>
                     <Route path='/cart' render={(props) =>
                         <div>
                             <MainLayout/>

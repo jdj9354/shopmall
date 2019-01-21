@@ -22,8 +22,13 @@
   color: #61dafb;
 }
 
+.space{
+  height:20px;
+}
+
 body {
   --main-color: #4b0082;
+  --main-color-fifty: #804b0082;
 }
 
 @keyframes App-logo-spin {
