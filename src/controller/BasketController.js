@@ -1,8 +1,8 @@
 import AuthManager from "../auth/AuthManager";
 
 class BasketController {
-    addBasketItem(id, optionName, num) {
-        let curUser = new AuthManager().getAuthInfo().user;
+    async addBasketItem(id, optionName, num) {
+        let curUser = await new AuthManager().getAuthInfo().user;
         let localBasketInfo = JSON.parse(localStorage.getItem("basket"));
         if (!localBasketInfo)
             localBasketInfo = {};
@@ -25,8 +25,8 @@ class BasketController {
         }
     }
 
-    removeBasketItem(id, optionName) {
-        let curUser = new AuthManager().getAuthInfo().user;
+    async removeBasketItem(id, optionName) {
+        let curUser = await new AuthManager().getAuthInfo().user;
         let localBasketInfo = JSON.parse(localStorage.getItem("basket"));
 
         if (localBasketInfo[curUser][id][optionName] == null) {
@@ -39,8 +39,8 @@ class BasketController {
         }
     }
 
-    emptyBasket() {
-        let curUser = new AuthManager().getAuthInfo().user;
+    async emptyBasket() {
+        let curUser = await new AuthManager().getAuthInfo().user;
         let localBasketInfo = JSON.parse(localStorage.getItem("basket"));
 
         if (localBasketInfo[curUser] == null) {
@@ -55,10 +55,10 @@ class BasketController {
 
     }
 
-    getBasketItems() {
+    async getBasketItems() {
         let basketItemsArray = [];
 
-        let curUser = new AuthManager().getAuthInfo().user;
+        let curUser = await new AuthManager().getAuthInfo().user;
         if (!localStorage.getItem("basket"))
             localStorage.setItem("basket", JSON.stringify({}));
 

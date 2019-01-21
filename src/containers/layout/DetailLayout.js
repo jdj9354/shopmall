@@ -243,7 +243,7 @@ class DetailLayout extends Component {
                                 <a>구매 하기</a>
                             </div>
                             <div id="basketDiv">
-                                <a onClick={() => {
+                                <a onClick={async () => {
                                     if (this.state.selectedOptionName == null) {
                                         window.alert("상품의 옵션을 선택해주세요");
                                         return;
@@ -253,7 +253,7 @@ class DetailLayout extends Component {
                                             window.alert("상품의 옵션을 선택해주세요");
                                             return;
                                         }
-                                        let basketAddResult = new BasketController().addBasketItem(this.state.data._id, this.state.selectedOptionName,this.state.numberToBuy);
+                                        let basketAddResult = await new BasketController().addBasketItem(this.state.data._id, this.state.selectedOptionName,this.state.numberToBuy);
                                         window.alert(basketAddResult.message);
                                     }
                                 }

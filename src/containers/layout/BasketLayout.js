@@ -3,7 +3,8 @@ import Process from '../element/Process.js'
 import './BasketLayout.css';
 import BasketController from "../../controller/BasketController";
 import BackendController from "../../controller/BackendController";
-import {BrowserRouter as Router, Route, Link} from "react-router-dom";
+import {BrowserRouter as Router, Route, Link, Redirect} from "react-router-dom";
+import AuthManager from "../../auth/AuthManager";
 
 let beController = new BackendController();
 
@@ -17,10 +18,10 @@ class BasketLayout extends Component {
         };
     }
 
-    componentWillMount() {
+    async componentWillMount() {
         let basketItemsArray = [];
 
-        let basketItems = new BasketController().getBasketItems();
+        let basketItems = await new BasketController().getBasketItems();
         let loadCount = 0;
         let totalPrice = this.state.totalPrice;
         basketItems.map(async (el) => {
@@ -187,8 +188,8 @@ class BasketLayout extends Component {
                                             [기본배송] 조건
                                         </td>
                                         <td>
-                                            <div class="item_delete" onClick={(el) => {
-                                                new BasketController().removeBasketItem(el.target.parentElement.parentElement.dataset.id, el.target.parentElement.parentElement.dataset.option_name);
+                                            <div class="item_delete" onClick={async (el) => {
+                                                await new BasketController().removeBasketItem(el.target.parentElement.parentElement.dataset.id, el.target.parentElement.parentElement.dataset.option_name);
                                                 window.location.href = "/cart/";
                                             }}>삭제
                                             </div>
@@ -217,23 +218,23 @@ class BasketLayout extends Component {
                         <span class="right">
                                 <ul>
                                     <li>
-                                        <a className="toggle_off" onClick={(el) => {
-                                            new BasketController().emptyBasket();
+                                        <a className="toggle_off" onClick={async (el) => {
+                                            await new BasketController().emptyBasket();
                                             window.location.href = "/";
                                         }}>장바구니 비우기</a>
                                     </li>
                                     <li>
-                                        <a className="toggle_off" onClick={(el) => {
+                                        <a className="toggle_off" onClick={async (el) => {
                                             let checkboxes = document.getElementsByClassName('item_checkbox');
 
                                             for (let i = 0; i < checkboxes.length; i++) {
                                                 if (checkboxes[i].checked) {
                                                     console.log(checkboxes[i].parentElement.parentElement.id);
-                                                    new BasketController().removeBasketItem(checkboxes[i].parentElement.parentElement.dataset.id, checkboxes[i].parentElement.parentElement.dataset.option_name);
+                                                    await new BasketController().removeBasketItem(checkboxes[i].parentElement.parentElement.dataset.id, checkboxes[i].parentElement.parentElement.dataset.option_name);
                                                 }
                                             }
 
-                                            if (new BasketController().getBasketItems().length == 0)
+                                            if (await new BasketController().getBasketItems().length == 0)
                                                 window.location.href = "/";
                                             else
                                                 window.location.href = "/cart";
@@ -247,11 +248,16 @@ class BasketLayout extends Component {
                                                 ev.preventDefault();
 
                                             }
+                                            console.log(this.getFinalSelectedItem());
+                                            localStorage.setItem("lastBasketItem", JSON.stringify(this.getFinalSelectedItem()));
+
                                         }} exact to={{pathname: "/order", itemsArray: this.getFinalSelectedItem()}}> 선택상품 주문</Link>
                                     </li>
                                     <li>
-                                        <Link className="toggle_on" exact
-                                              to={{pathname: "/order", itemsArray: this.state.basketItemsArray}}> 전체상품 주문</Link>
+                                        <Link className="toggle_on" onClick={(ev) => {
+                                            localStorage.setItem("lastBasketItem", JSON.stringify(this.state.basketItemsArray));
+
+                                        }} exact to={{pathname: "/order", itemsArray: this.state.basketItemsArray}}> 전체상품 주문</Link>
                                     </li>
                                 </ul>
 							</span>
