@@ -83,12 +83,14 @@ class PurchaseLayout extends Component {
             page,
             this.state.pageLimit);
 
+        if(requestResult != null) {
 
-        this.setState({
-            orderList: requestResult.docs,
-            page: page,
-            totalPage: requestResult.pages
-        })
+            this.setState({
+                orderList: requestResult.docs,
+                page: page,
+                totalPage: requestResult.pages
+            })
+        }
     }
 
     render() {

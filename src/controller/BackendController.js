@@ -3,11 +3,20 @@ import * as Constants from "../Constants";
 
 class BackendController {
     async getItem(productId) {
-        return await this.requestAPI(Constants.backend + '/api/product/getItem/' + productId, {}, "GET");
+        let result = await this.requestAPI(Constants.backend + '/api/product/getItem/' + productId, {}, "GET");
+        if(result.ok)
+            return await result.json();
+        else
+            return null;
     }
 
     async getItems(productIds) {
-        return await this.requestAPI(Constants.backend + '/api/product/getItems', {product_ids: productIds}, "POST");
+        let result = await this.requestAPI(Constants.backend + '/api/product/getItems', {product_ids: productIds}, "POST");
+
+        if(result.ok)
+            return await result.json();
+        else
+            return null;
     }
 
     async getOrderList(user, startDate, endDate, page, pageLimit) {
@@ -26,7 +35,12 @@ class BackendController {
             page: page,
             page_limit: pageLimit
         }
-        return await this.requestAPI(Constants.backend + '/api/order/readOrder', param, "POST");
+        let result = await this.requestAPI(Constants.backend + '/api/order/readOrder', param, "POST");
+
+        if(result.ok)
+            return await result.json();
+        else
+            return null;
     }
 
     async requestAPI(endPoint, bodyJsonParam, method) {
@@ -43,7 +57,7 @@ class BackendController {
                     method: method,
                     body: JSON.stringify(bodyJsonParam)
                 });
-            return await res.json();
+            return res;
         }
     }
 }
