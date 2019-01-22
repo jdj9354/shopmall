@@ -22,10 +22,14 @@ class BasketLayout extends Component {
         let basketItemsArray = [];
 
         let basketItems = await new BasketController().getBasketItems();
+        if(basketItems == null)
+            return;
         let loadCount = 0;
         let totalPrice = this.state.totalPrice;
         basketItems.map(async (el) => {
             let product = await beController.getItem(el.id);
+            if(product == null)
+                return;
             product.optionName = el.optionName;
             product.num = el.num;
             basketItemsArray.push(product);
