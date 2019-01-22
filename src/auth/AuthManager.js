@@ -28,7 +28,6 @@ class AuthManager {
                 let authInfo = await response.json();
 
                 let accessTokenStr = document.cookie = "access_token=" + authInfo.access_token + "; expires=" + authInfo.accessTokenExpiresAt + "; path=/";
-                console.log(accessTokenStr);
                 document.cookie = accessTokenStr;
 
 

@@ -4,7 +4,6 @@ import * as Constants from "../Constants";
 class BackendController {
     async getItem(productId) {
         let result = await this.requestAPI(Constants.backend + '/api/product/getItem/' + productId, {}, "GET");
-        console.log(result)
         if(result.ok)
             return await result.json();
         else
