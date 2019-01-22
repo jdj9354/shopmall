@@ -69,7 +69,9 @@ class PurchaseLayout extends Component {
     }
 
     async requestOrderList(page) {
-        let requestResult = await backendController.getOrderList(authManager.getAuthInfo().user,
+        let userInfo = await authManager.getAuthInfo();
+        let userId = userInfo.user;
+        let requestResult = await backendController.getOrderList(userId,
             {
                 year: this.state.start.year,
                 month: this.state.start.month,

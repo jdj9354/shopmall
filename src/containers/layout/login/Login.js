@@ -69,7 +69,7 @@ export default class Login extends Component {
                                     response = JSON.parse(event.target.response);
                                     let response = JSON.parse(response.body);
                                     var expireDate = Util.dateFromISO8601(response.expires_in);
-                                    new AuthManager().setAuthInfo(response.access_token, response.refresh_token, expireDate);
+                                    new AuthManager().setAuthInfo(response.user, response.access_token, response.refresh_token, expireDate);
                                     window.location.href = loginObj.state.forwarding;
                                 }
                             };
