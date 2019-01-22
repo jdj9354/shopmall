@@ -11,6 +11,7 @@ import Registration from "./containers/layout/login/Registration";
 import AuthManager from "./auth/AuthManager";
 import AuthBeforePurchase from "./containers/layout/AuthBeforePurchase";
 import PurchaseLayout from "./containers/layout/PurchaseLayout";
+import MyPageLayout from "./containers/layout/MyPageLayout";
 
 
 class App extends Component {
@@ -38,6 +39,14 @@ class App extends Component {
                         )
                     }
                     }/>
+                    <Route path='/mypage' render={(props)=>{
+                        return(
+                            <div>
+                                <MainLayout/>
+                                <MyPageLayout/>
+                            </div>
+                        )
+                    }}/>
                     <Route path='/login_with_purchase' render={(props) => {
                         return (
                             <div>

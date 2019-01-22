@@ -1,0 +1,6 @@
+@import "../../App.css";
+
+.MyPageLayout div.on_toggle {
+    background-color: var(--main-color);
+    color: #ffffff;
+}
