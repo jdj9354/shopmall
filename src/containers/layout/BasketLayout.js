@@ -233,7 +233,6 @@ class BasketLayout extends Component {
 
                                             for (let i = 0; i < checkboxes.length; i++) {
                                                 if (checkboxes[i].checked) {
-                                                    console.log(checkboxes[i].parentElement.parentElement.id);
                                                     await new BasketController().removeBasketItem(checkboxes[i].parentElement.parentElement.dataset.id, checkboxes[i].parentElement.parentElement.dataset.option_name);
                                                 }
                                             }
@@ -252,7 +251,6 @@ class BasketLayout extends Component {
                                                 ev.preventDefault();
 
                                             }
-                                            console.log(this.getFinalSelectedItem());
                                             localStorage.setItem("lastBasketItem", JSON.stringify(this.getFinalSelectedItem()));
 
                                         }} exact to={{pathname: "/order", itemsArray: this.getFinalSelectedItem()}}> 선택상품 주문</Link>

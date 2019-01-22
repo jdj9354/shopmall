@@ -2,30 +2,39 @@ import * as Util from '../Util';
 import * as Constants from "../Constants";
 
 class AuthManager {
-    getAuthInfo() {
+    async getAuthInfo() {
         let accessToken = this.getCookie("access_token");
         let refreshToken = this.getCookie("refresh_token");
         if (accessToken) {
-            return new Promise((resolve) => {
-                    resolve (accessToken)});
+            return await new Promise((resolve) => {
+                    resolve({
+                            user: localStorage.getItem("activeUser"),
+                            token: accessToken
+                        }
+                    )
+                }
+            );
 
         } else {
             if (refreshToken) {
 
-                let response = fetch(Constants.backend + "/api/auth/renewToken", {
+                let response = await fetch(Constants.backend + "/api/auth/renewToken", {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({refreshToken:refreshToken})})
-                    .then(response => response.json())
-                    .then((authInfo) => {
-                        let accessTokenStr = document.cookie = "access_token=" + authInfo.accessToken + "; expires=" + authInfo.accessTokenExpiresAt + "; path=/";
-                        console.log(accessTokenStr);
-                        document.cookie = accessTokenStr;
-                    });
+                    body: JSON.stringify({refreshToken: refreshToken})
+                });
+                let authInfo = await response.json();
 
-                return response;
+                let accessTokenStr = document.cookie = "access_token=" + authInfo.access_token + "; expires=" + authInfo.accessTokenExpiresAt + "; path=/";
+                document.cookie = accessTokenStr;
+
+
+                return {
+                    user: localStorage.getItem("activeUser"),
+                    token: authInfo.access_token
+                };
 
                 // if (response.statusCode != 200) {
                 //     return {
@@ -43,17 +52,17 @@ class AuthManager {
                 //     }
                 // }
             } else {
-                return new Promise((resolve) => {
-                    resolve ("guest")});
+                return await new Promise((resolve) => {
+                    resolve({user: "guest"})
+                });
             }
         }
     }
 
-    setAuthInfo(accessToken, refreshToken, expireIn) {
+    setAuthInfo(user, accessToken, refreshToken, expireIn) {
         let accessTokenStr = document.cookie = "access_token=" + accessToken + "; expires=" + expireIn + "; path=/";
         let refreshTokenStr = document.cookie = "refresh_token=" + refreshToken + ";expires= 31 Dec 9999 12:00:00 UTC; path=/";
-        console.log("new accessToken : " + accessTokenStr);
-        console.log("new refreshToken : " + refreshTokenStr);
+        localStorage.setItem("activeUser", user);
         document.cookie = accessTokenStr;
         document.cookie = refreshTokenStr;
     }

@@ -18,7 +18,7 @@ class MainLayout extends Component {
 
         let authResult = new AuthManager().getAuthInfo();
         authResult.then((authInfo) =>{
-                this.setState({user:authInfo})
+                this.setState({user:authInfo.user})
             })
             .catch((e)=> {
                 this.setState({user:"guest"})

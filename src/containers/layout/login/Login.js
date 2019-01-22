@@ -27,7 +27,6 @@ export default class Login extends Component {
     }
 
     handleSubmit = (event) => {
-        console.log("aeasdf");
         window.alert(event);
         event.preventDefault();
         event.stopPropagation();
@@ -62,14 +61,13 @@ export default class Login extends Component {
                             xhr.open("POST", Constants.backend + "/auth/login");
                             xhr.onload = function (event) {
                                 let response = JSON.parse(event.target.response);
-                                console.log(response)
                                 if (response.statusCode != 200) {
                                     window.alert("아이디/패스워드를 확인해 주세요");
                                 } else {
                                     response = JSON.parse(event.target.response);
                                     let response = JSON.parse(response.body);
                                     var expireDate = Util.dateFromISO8601(response.expires_in);
-                                    new AuthManager().setAuthInfo(response.access_token, response.refresh_token, expireDate);
+                                    new AuthManager().setAuthInfo(response.user, response.access_token, response.refresh_token, expireDate);
                                     window.location.href = loginObj.state.forwarding;
                                 }
                             };

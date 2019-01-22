@@ -38,7 +38,6 @@ class ShopItemGrid extends  Component{
                     console.error(err)
                     return
                 }
-                console.log(data.body)
                 this.setState({data:data.body})
             });
     }
