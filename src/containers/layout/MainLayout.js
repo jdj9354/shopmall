@@ -72,7 +72,7 @@ class MainLayout extends Component {
                                     </li>
                                 ) : (
                                     <li>
-                                        <a href="/"><img src={myIconImagePath}/></a>
+                                        <a href="/mypage"><img src={myIconImagePath}/></a>
                                     </li>
                                 )}
                                 <li>
