@@ -1,0 +1,20 @@
+@import "../../App.css";
+
+.MyPageLayout {
+    text-align: center;
+    margin-left: 25%;
+    margin-top: 15%;
+    width: 50%;
+    position: absolute;
+}
+
+.MyPageLayout div{
+    margin: 5%;
+    cursor: pointer;
+}
+
+.MyPageLayout div a.on_toggle {
+    padding: 2%;
+    background-color: var(--main-color);
+    color: #ffffff;
+}
