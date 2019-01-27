@@ -1,0 +1,43 @@
+@import "../../App.css";
+
+.SearchResult .footerWrapper {
+    width: 80%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    margin-left: 10%;
+    text-align: center;
+}
+
+.SearchResult .footerWrapper div div {
+    padding-left: 10px;
+    padding-right: 10px;
+    cursor: pointer;
+}
+
+.SearchResult .footerWrapper div div:hover {
+    border: 1px solid var(--main-color);
+    color: var(--main-color);
+}
+
+.SearchResult .footerWrapper div div.selected {
+    border: 1px solid var(--main-color);
+    color: var(--main-color);
+}
+
+.SearchResult .footerWrapper div  {
+    text-align: center;
+    display: inline-block;
+    padding: 5px;
+}
+
+.SearchResult .footerWrapper div div {
+    text-align: center;
+    display: inline-block;
+    padding: 5px;
+}
+
+.SearchResult .itemContainer {
+    padding-top: 10%;
+    width:80%;
+    margin-left: 10%;
+}
