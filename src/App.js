@@ -12,6 +12,7 @@ import AuthManager from "./auth/AuthManager";
 import AuthBeforePurchase from "./containers/layout/AuthBeforePurchase";
 import PurchaseLayout from "./containers/layout/PurchaseLayout";
 import MyPageLayout from "./containers/layout/MyPageLayout";
+import SearchResult from "./containers/layout/SearchResult";
 
 
 class App extends Component {
@@ -109,6 +110,12 @@ class App extends Component {
                         <div>
                             <MainLayout/>
                             <DetailLayout id={props.match.params.id}/>
+                        </div>
+                    }/>
+                    <Route exact path='/search/:query' render={(props) =>
+                        <div>
+                            <MainLayout/>
+                            <SearchResult searchQuery={props.match.params.query}/>
                         </div>
                     }/>
                     <Route exact path='/' render={(props) =>
