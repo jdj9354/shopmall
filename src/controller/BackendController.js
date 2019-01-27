@@ -43,6 +43,20 @@ class BackendController {
             return null;
     }
 
+    async searchProduct(query, page, pageLimit){
+        let param = {
+            query: query,
+            page: page,
+            pageLimit: pageLimit
+        };
+        let result = await this.requestAPI(Constants.backend + '/api/search/product', param, "POST");
+
+        if(result.ok)
+            return await result.json();
+        else
+            return null;
+    }
+
     async requestAPI(endPoint, bodyJsonParam, method) {
         if (method == "GET") {
             let res = await fetch(endPoint);
