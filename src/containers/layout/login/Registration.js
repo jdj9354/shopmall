@@ -2,12 +2,16 @@ import React, {Component} from 'react';
 import './Registration.css';
 import request from "superagent";
 import * as Constants from "../../../Constants";
+import BackendController from "../../../controller/BackendController";
+import * as Util from "../../../Util";
+import AuthManager from "../../../auth/AuthManager";
 
 class Registration extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
+            forwarding: props.forwarding,
             email: {text: "", isValid: false},
             password: {text: "", isValid: false},
             passwordConfirm: {text: "", isValid: false},
@@ -45,40 +49,33 @@ class Registration extends Component {
             if (event.target.validity.valid) {
                 this.state.email.isValid = true;
                 event.target.nextSibling.style.display = "none";
-            }
-            else {
+            } else {
                 this.state.email.isValid = false;
                 event.target.nextSibling.style.display = "block";
             }
-        }
-        else if (event.target.id == "password") {
+        } else if (event.target.id == "password") {
             let passwordConfirmObj = document.getElementById("passwordConfirm");
             if (passwordConfirmObj.value != event.target.value) {
                 event.target.nextSibling.nextSibling.style.display = "block";
                 this.state.passwordConfirm.isValid = false;
-            }
-            else {
+            } else {
                 event.target.nextSibling.style.display = "none";
                 this.state.passwordConfirm.isValid = true;
             }
             this.state.password.isValid = true;
-        }
-        else if (event.target.id == "passwordConfirm") {
+        } else if (event.target.id == "passwordConfirm") {
             let passwordObj = document.getElementById("password");
             if (passwordObj.value != event.target.value) {
                 event.target.nextSibling.style.display = "block";
                 this.state.passwordConfirm.isValid = false;
-            }
-            else {
+            } else {
                 event.target.nextSibling.style.display = "none";
                 this.state.passwordConfirm.isValid = true;
             }
-        }
-        else {
+        } else {
             if (event.target.value == "") {
                 this.state[event.target.id].isValid = false;
-            }
-            else {
+            } else {
                 this.state[event.target.id].isValid = true;
             }
         }
@@ -222,6 +219,8 @@ class Registration extends Component {
                                 let isAllValid = true;
 
                                 for (let [key, value] of Object.entries(this.state)) {
+                                    if(!value)
+                                        continue;
                                     if (value.isValid == undefined)
                                         continue;
                                     if (value.isValid == false) {
@@ -233,8 +232,7 @@ class Registration extends Component {
                                 if (!isAllValid) {
                                     window.alert("입력란을 확인해주세요")
                                     return;
-                                }
-                                else {
+                                } else {
                                     let formTarget = document.querySelector(".Registration form");
                                     let termsOfService = document.querySelector(".Registration #termsOfService");
                                     formTarget.classList.add("hide");
@@ -283,8 +281,50 @@ class Registration extends Component {
                         이전 단계
                     </div>
                     <div onClick={() => {
-                        window.alert("입력하신 메일 주소로 확인 메일이 전송 되었습니다.\r\n메일에서 계정을 활성화 해주세요.");
-                        window.location.href = "/";
+
+                        let backendController = new BackendController();
+                        let birthdatDate = new Date();
+                        birthdatDate.setFullYear(Number(this.state.year.text), Number(this.state.month.text) + 1, Number(this.state.day.text));
+                        let userJson = {
+                            id: new Buffer(this.state.email.text).toString('base64'),
+                            password: new Buffer(this.state.password.text).toString('base64'),
+                            firstname: this.state.firstName.text,
+                            lastname: this.state.lastName.text,
+                            phone: this.state.phone.text,
+                            birthday: birthdatDate,
+                            gender: this.state.gender.text,
+
+                        }
+
+                        let returnUrl = this.state.forwarding;
+                        if(!returnUrl)
+                            returnUrl = "/";
+
+                        backendController.requestRegisterUser(userJson)
+                            .then((result) => {
+                                window.alert("가입을 환영합니다");
+
+                                var xhr = new XMLHttpRequest();
+                                xhr.open("POST", Constants.backend + "/auth/login");
+                                xhr.onload = function (event) {
+                                    let response = JSON.parse(event.target.response);
+                                    response = JSON.parse(response.body);
+                                    var expireDate = Util.dateFromISO8601(response.expires_in);
+                                    new AuthManager().setAuthInfo(response.user, response.access_token, response.refresh_token, expireDate);
+
+                                    window.location.href = returnUrl;
+                                };
+                                xhr.setRequestHeader('Content-type', 'application/json')
+                                xhr.send(JSON.stringify({
+                                    username: new Buffer(this.state.email.text).toString('base64'),
+                                    password: new Buffer(this.state.password.text).toString('base64')
+                                }));
+                            })
+                            .catch((e) => {
+                                window.alert("가입에 실패하였습니다. 관리자에게 문의하세요");
+                                window.location.href = "/";
+                            });
+
                     }} className="stepDiv">
                         동의
                     </div>

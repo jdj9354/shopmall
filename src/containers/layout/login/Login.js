@@ -12,7 +12,8 @@ export default class Login extends Component {
         this.state = {
             email: "",
             password: "",
-            forwarding: props.forwarding
+            forwarding: props.forwarding,
+            onLoginSuccess: props.onLoginSuccess
         };
     }
 
@@ -39,6 +40,8 @@ export default class Login extends Component {
         let icon_kakao = require('../../../res/icon_kakao.png');
         let icon_naver = require('../../../res/icon_naver.png');
         let icon_twitter = require('../../../res/icon_twitter.png');
+        let forwarding = this.state.forwarding;
+        let onLoginSuccess = this.state.onLoginSuccess;
 
         return (
             <div className="Login">
@@ -68,6 +71,8 @@ export default class Login extends Component {
                                     let response = JSON.parse(response.body);
                                     var expireDate = Util.dateFromISO8601(response.expires_in);
                                     new AuthManager().setAuthInfo(response.user, response.access_token, response.refresh_token, expireDate);
+                                    if(onLoginSuccess)
+                                        onLoginSuccess();
                                     window.location.href = loginObj.state.forwarding;
                                 }
                             };
@@ -80,7 +85,7 @@ export default class Login extends Component {
                         }}>Login</a>
                     </div>
                     <div>
-                        <a className="on_toggle" href="/registration">회원 가입</a>
+                        <Link className="on_toggle" exact to={{pathname: "/registration", forwarding: forwarding}}>회원 가입</Link>
                     </div>
                 </form>
                 <div className="sns_login_group">

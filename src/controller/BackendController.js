@@ -7,7 +7,7 @@ class BackendController {
         if(result.ok)
             return await result.json();
         else
-            return null;
+            return Promise.reject(new Error(400));
     }
 
     async getItems(productIds) {
@@ -16,7 +16,7 @@ class BackendController {
         if(result.ok)
             return await result.json();
         else
-            return null;
+            return Promise.reject(new Error(400));
     }
 
     async getOrderList(user, startDate, endDate, page, pageLimit) {
@@ -40,7 +40,16 @@ class BackendController {
         if(result.ok)
             return await result.json();
         else
-            return null;
+            return Promise.reject(new Error(400));
+    }
+    
+    async requestRegisterUser(userInfo){
+        let result = await this.requestAPI(Constants.backend + '/api/auth/registerUser',userInfo,"POST");
+
+        if(result.ok)
+            return await result.json();
+        else
+            return Promise.reject(new Error(400));
     }
 
     async requestAPI(endPoint, bodyJsonParam, method) {
