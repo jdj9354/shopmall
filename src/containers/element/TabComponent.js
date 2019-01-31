@@ -12,7 +12,7 @@ class TabComponent extends Component{
 
     render() {
         return (
-            <div>
+            <div className="TabComponent">
                 <div class="tab">
                     {
                         this.state.tabItems.map((el) => {

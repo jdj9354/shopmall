@@ -1,0 +1,6 @@
+.Payment .TabComponent form input.btnPaypalBuy {
+    width: 5%;
+    padding: 2%;
+    border: 1px solid var(--main-color);
+    color: var(--main-color);
+}
