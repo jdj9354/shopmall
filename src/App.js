@@ -18,7 +18,6 @@ import SearchResult from "./containers/layout/SearchResult";
 class App extends Component {
     constructor(props) {
         super(props);
-
         let authInfoPromise = new AuthManager().getAuthInfo();
         authInfoPromise.then((authInfo) => {
             this.setState(({
@@ -35,7 +34,7 @@ class App extends Component {
                         return (
                             <div>
                                 <MainLayout/>
-                                <Registration/>
+                                <Registration forwarding={props.location.forwarding}/>
                             </div>
                         )
                     }
@@ -63,13 +62,16 @@ class App extends Component {
                             </div>)
                     }}/>
                     <Route path='/order' render={(props) => {
-                        // let getAuthAsyncFunc = async () => {
-                        //     return .then((result) =>{ return result});
-                        // }
                         if (!this.state)
-                            return;
+                            return (<div>
+                                <MainLayout/>
+                                <OrderLayout/>
+                            </div>);
                         if (!this.state.authInfo)
-                            return;
+                            return (<div>
+                                <MainLayout/>
+                                <OrderLayout/>
+                            </div>);
 
                         let authInfo = this.state.authInfo;
                         let noMemPurchase = false;

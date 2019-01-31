@@ -64,6 +64,19 @@ class BasketController {
 
     }
 
+    async overrideAsGuestBasket(){
+        let curUserInfo = await new AuthManager().getAuthInfo();
+        let curUserId = curUserInfo.user;
+
+        let localBasketInfo = JSON.parse(localStorage.getItem("basket"));
+        if(localBasketInfo["guest"]) {
+            localBasketInfo[curUserId] = localBasketInfo["guest"];
+            localBasketInfo["guest"] = {};
+
+            localStorage.setItem("basket", JSON.stringify(localBasketInfo));
+        }
+    }
+
     async getBasketItems() {
         let basketItemsArray = [];
 
