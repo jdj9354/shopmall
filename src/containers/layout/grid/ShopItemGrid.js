@@ -3,6 +3,7 @@ import './ShopItemGrid.css';
 import ShopItemRow from './ShopItemRow';
 import request from "superagent";
 import * as Constants from "../../../Constants";
+import BackendController from "../../../controller/BackendController";
 
 const styles = theme => ({
     root: {
@@ -15,48 +16,39 @@ const styles = theme => ({
     },
 });
 
-class ShopItemGrid extends  Component{
+let backendController = new BackendController();
 
-    constructor(props){
+class ShopItemGrid extends Component {
+
+    constructor(props) {
         super(props);
 
-        var json ={products:[]};
-        this.state ={
-            data:json
+        var json = {products: []};
+        this.state = {
+            data: json
         }
     }
 
-    componentWillMount(){
-        this.getProductList()
-    }
-
-
-    getProductList() {
-        request.get(Constants.backend+'/api/product/getAllItem')
-            .end((err,data)=>{
-                if(err) {
-                    console.error(err)
-                    return
-                }
-                this.setState({data:data.body})
-            });
+    async componentWillMount() {
+        let productList = await backendController.getAllItem();
+        this.setState({data: productList});
     }
 
 
     render() {
         let products = this.state.data.products;
         let productsRow = [];
-        let columnSize = this.props.col? this.props.col : 3;
-        for(let i=0; i<products.length; i+=columnSize){
+        let columnSize = this.props.col ? this.props.col : 3;
+        for (let i = 0; i < products.length; i += columnSize) {
             let start = i;
-            let end = i+columnSize >= products.length ? products.length  : i+columnSize;
+            let end = i + columnSize >= products.length ? products.length : i + columnSize;
 
-            productsRow.push(products.slice(start,end));
+            productsRow.push(products.slice(start, end));
         }
         return (
             <div class="itemContainer">
                 {
-                    productsRow.map((el) =>{
+                    productsRow.map((el) => {
                         return <ShopItemRow products={el}/>;
                     })
                 }

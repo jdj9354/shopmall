@@ -9,6 +9,7 @@ import "react-image-gallery/styles/css/image-gallery.css";
 import "react-image-gallery/styles/css/image-gallery.css";
 import AuthManager from "../../auth/AuthManager";
 import BasketController from "../../controller/BasketController";
+import BackendController from "../../controller/BackendController";
 
 
 let detail_product = null;
@@ -17,6 +18,8 @@ let detail_qa = null;
 let detail_refund_exchange = null;
 
 let selected_detail_item = 0;
+
+let backendController = new BackendController();
 
 class DetailLayout extends Component {
 
@@ -28,7 +31,7 @@ class DetailLayout extends Component {
         }
     }
 
-    componentWillMount() {
+    async componentWillMount() {
         this.getProduct();
         window.addEventListener('scroll', this.handleScroll);
     }
@@ -43,22 +46,17 @@ class DetailLayout extends Component {
     }
 
 
-    getProduct() {
+    async getProduct() {
         let productId = this.props.id;
-        request.get(Constants.backend + '/api/product/getItem/' + productId)
-            .end((err, data) => {
-                if (err) {
-                    console.error(err)
-                    return
-                }
-                data.body.options.unshift({name: "옵션", priceChange: 0})
-                this.setState({
-                    data: data.body,
-                    selectedOptionName: "옵션",
-                    numberToBuy:1,
-                    finalPrice : data.body.price
-                })
-            });
+
+        let product = await backendController.getItem(productId);
+        product.options.unshift({name: "옵션", priceChange: 0})
+        this.setState({
+            data: product,
+            selectedOptionName: "옵션",
+            numberToBuy: 1,
+            finalPrice: product.price
+        });
     }
 
     render() {
@@ -209,9 +207,9 @@ class DetailLayout extends Component {
                                 this.state.selectedOptionName = selName;
                                 this.state.numberToBuy = 1;
                                 this.setState({
-                                    selectedOptionName : this.state.selectedOptionName,
-                                    numberToBuy : this.state.numberToBuy
-                                },() =>{
+                                    selectedOptionName: this.state.selectedOptionName,
+                                    numberToBuy: this.state.numberToBuy
+                                }, () => {
                                     this.computeFinalPrice();
                                 });
                             }} items={this.state.data.options}/>
@@ -227,7 +225,7 @@ class DetailLayout extends Component {
                                            }
                                            this.state.numberToBuy = node.target.value;
                                            this.setState({
-                                               numberToBuy:this.state.numberToBuy
+                                               numberToBuy: this.state.numberToBuy
                                            })
                                            this.computeFinalPrice();
                                        }
@@ -247,13 +245,12 @@ class DetailLayout extends Component {
                                     if (this.state.selectedOptionName == null) {
                                         window.alert("상품의 옵션을 선택해주세요");
                                         return;
-                                    }
-                                    else {
+                                    } else {
                                         if (this.state.selectedOptionName == "옵션") {
                                             window.alert("상품의 옵션을 선택해주세요");
                                             return;
                                         }
-                                        let basketAddResult = await new BasketController().addBasketItem(this.state.data._id, this.state.selectedOptionName,this.state.numberToBuy);
+                                        let basketAddResult = await new BasketController().addBasketItem(this.state.data._id, this.state.selectedOptionName, this.state.numberToBuy);
                                         window.alert(basketAddResult.message);
                                     }
                                 }
@@ -272,8 +269,7 @@ class DetailLayout extends Component {
         let detailList = document.getElementById("detail_list");
         if (window.scrollY >= mainProductContentElem.offsetTop + detailElem.offsetTop) {
             detailElem.classList.add('is_fixed');
-        }
-        else {
+        } else {
             detailElem.classList.remove('is_fixed');
         }
 
@@ -302,15 +298,12 @@ class DetailLayout extends Component {
 
         if (judgeLine < product_end) {
             selected_detail_item = 0;
-        }
-        else if (judgeLine >= review_start && window.scrollY < review_end) {
+        } else if (judgeLine >= review_start && window.scrollY < review_end) {
             selected_detail_item = 1;
 
-        }
-        else if (judgeLine >= qa_start && window.scrollY < qa_end) {
+        } else if (judgeLine >= qa_start && window.scrollY < qa_end) {
             selected_detail_item = 2;
-        }
-        else if (judgeLine >= refund_start && window.scrollY < refund_end) {
+        } else if (judgeLine >= refund_start && window.scrollY < refund_end) {
             selected_detail_item = 3;
 
         }
@@ -324,16 +317,16 @@ class DetailLayout extends Component {
         }
     }
 
-    computeFinalPrice(){
+    computeFinalPrice() {
         let finalPrice = 0;
-        for(let i=0; i< this.state.data.options.length; i++){
-            if(this.state.data.options[i].name == this.state.selectedOptionName){
+        for (let i = 0; i < this.state.data.options.length; i++) {
+            if (this.state.data.options[i].name == this.state.selectedOptionName) {
                 finalPrice += parseInt(this.state.data.options[i].priceChange);
             }
         }
         finalPrice += parseInt(this.state.data.price);
         finalPrice *= this.state.numberToBuy;
-        this.setState({finalPrice : finalPrice});
+        this.setState({finalPrice: finalPrice});
     }
 
     handleClickDetailMenu = (event) => {

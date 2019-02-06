@@ -1,0 +1,30 @@
+@import "../../App.css";
+
+.ProductRegister {
+    margin-left: 20%;
+    margin-right: 5%;
+    width: 75%;
+    margin-top: 10%;
+    margin-bottom: 5%;
+    position: absolute;
+}
+
+.ProductRegister form div {
+    border: 1px solid var(--main-color);
+    padding: 10px;
+    margin: 5px;
+}
+
+.ProductRegister #thumbnailDescription {
+    height: 30%;
+}
+
+.ProductRegister #detailImages {
+    width: 50%;
+}
+
+.ProductRegister textarea {
+    resize: none;
+    width: 100%;
+    overflow: visible;
+}

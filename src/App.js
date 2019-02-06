@@ -13,6 +13,7 @@ import AuthBeforePurchase from "./containers/layout/AuthBeforePurchase";
 import PurchaseLayout from "./containers/layout/PurchaseLayout";
 import MyPageLayout from "./containers/layout/MyPageLayout";
 import SearchResult from "./containers/layout/SearchResult";
+import ProductRegister from "./containers/layout/ProductRegister";
 
 
 class App extends Component {
@@ -30,6 +31,14 @@ class App extends Component {
         return (
             <Router>
                 <div>
+                    <Route
+                        path="/admin"
+                        render={({match: {url}}) => (
+                            <>
+                                <Route path={`${url}/productRegister`} component={ProductRegister}/>
+                            </>
+                        )}
+                    />
                     <Route path='/registration' render={(props) => {
                         return (
                             <div>
@@ -39,8 +48,8 @@ class App extends Component {
                         )
                     }
                     }/>
-                    <Route path='/mypage' render={(props)=>{
-                        return(
+                    <Route path='/mypage' render={(props) => {
+                        return (
                             <div>
                                 <MainLayout/>
                                 <MyPageLayout/>
