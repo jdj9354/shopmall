@@ -2,12 +2,22 @@ import request from "superagent";
 import * as Constants from "../Constants";
 
 class BackendController {
+
+    async registerProduct(productJson){
+        let result = await this.requestAPI(Constants.backend + '/api/product/registerProduct',productJson,"POST");
+
+        if(result.ok)
+            return await result.json();
+        else
+            return Promise.reject(result.json());
+    }
+
     async getItem(productId) {
         let result = await this.requestAPI(Constants.backend + '/api/product/getItem/' + productId, {}, "GET");
         if(result.ok)
             return await result.json();
         else
-            return Promise.reject(new Error(400));
+            return Promise.reject(result.json());
     }
 
     async getItems(productIds) {
@@ -16,7 +26,7 @@ class BackendController {
         if(result.ok)
             return await result.json();
         else
-            return Promise.reject(new Error(400));
+            return Promise.reject(result.json());
     }
 
     async getOrderList(user, startDate, endDate, page, pageLimit) {
@@ -40,7 +50,7 @@ class BackendController {
         if(result.ok)
             return await result.json();
         else
-            return Promise.reject(new Error(400));
+            return Promise.reject(result.json());
     }
     
     async requestRegisterUser(userInfo){
@@ -49,7 +59,7 @@ class BackendController {
         if(result.ok)
             return await result.json();
         else
-            return Promise.reject(new Error(400));
+            return Promise.reject(result.json());
     }
 
     async searchProduct(query, page, pageLimit){
