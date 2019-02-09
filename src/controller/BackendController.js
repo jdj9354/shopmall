@@ -50,7 +50,6 @@ class BackendController {
     async getItem(productId) {
         let result = await this.requestAPI(Constants.backend + '/api/product/getItem/' + productId, {}, "GET");
         let product = await result.json();
-        console.log(product)
         if (result.ok && product) {
             if (!product.thumbnailImageSrc.startsWith("http")) {
                 product.thumbnailImageSrc = Constants.backend + product.thumbnailImageSrc;
@@ -76,7 +75,7 @@ class BackendController {
             return product;
         }
         else
-            return Promise.reject(product);
+            return null;
     }
 
     async getItems(productIds) {
