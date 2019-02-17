@@ -14,6 +14,7 @@ import PurchaseLayout from "./containers/layout/PurchaseLayout";
 import MyPageLayout from "./containers/layout/MyPageLayout";
 import SearchResult from "./containers/layout/SearchResult";
 import ProductRegister from "./containers/layout/ProductRegister";
+import UpdateInformationLayout from "./containers/layout/UpdateInformationLayout";
 
 
 class App extends Component {
@@ -48,6 +49,14 @@ class App extends Component {
                         )
                     }
                     }/>
+                    <Route path='/updateInformation' render={(props) => {
+                        return(
+                            <div>
+                                <MainLayout/>
+                                <UpdateInformationLayout/>
+                            </div>
+                        )
+                    }}/>
                     <Route path='/mypage' render={(props) => {
                         return (
                             <div>
