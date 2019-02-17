@@ -17,6 +17,11 @@ class MyPageLayout extends Component {
                 <div>
                     <a className="on_toggle" onClick={() => {
                         window.location.href = "/purchaseList";
+                    }}>내 정보 수정</a>
+                </div>
+                <div>
+                    <a className="on_toggle" onClick={() => {
+                        window.location.href = "/purchaseList";
                     }}>구매 내역</a>
                 </div>
             </div>

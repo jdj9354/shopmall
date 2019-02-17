@@ -1,4 +1,3 @@
-
 @import "../../App.css";
 
 .MyPageLayout {
@@ -9,12 +8,14 @@
     position: absolute;
 }
 
-.MyPageLayout div{
+.MyPageLayout div {
     margin: 5%;
     cursor: pointer;
 }
 
 .MyPageLayout div a.on_toggle {
+    display: inline-block;
+    width: 30%;
     padding: 2%;
     background-color: var(--main-color);
     color: #ffffff;
