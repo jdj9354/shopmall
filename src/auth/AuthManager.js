@@ -18,7 +18,7 @@ class AuthManager {
         } else {
             if (refreshToken) {
 
-                let response = await fetch(Constants.backend + "/api/auth/renewToken", {
+                let response = await fetch("/api/auth/renewToken", {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
