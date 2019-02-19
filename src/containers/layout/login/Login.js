@@ -45,7 +45,7 @@ export default class Login extends Component {
 
         return (
             <div className="Login">
-                <form method="post" action={Constants.backend + "/api/auth/login"} id="loginForm"
+                <form method="post" action={"/api/auth/login"} id="loginForm"
                       onSubmit={this.handleSubmit}>
                     <input type="email" id="email" name="username" autofocus
                            value={this.state.email}
@@ -61,7 +61,7 @@ export default class Login extends Component {
                             // });
                             let loginObj = this;
                             var xhr = new XMLHttpRequest();
-                            xhr.open("POST", Constants.backend + "/auth/login");
+                            xhr.open("POST", "/api/auth/login");
                             xhr.onload = function (event) {
                                 let response = JSON.parse(event.target.response);
                                 if (response.statusCode != 200) {
