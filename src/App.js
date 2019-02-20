@@ -15,7 +15,10 @@ import MyPageLayout from "./containers/layout/MyPageLayout";
 import SearchResult from "./containers/layout/SearchResult";
 import ProductRegister from "./containers/layout/ProductRegister";
 import UpdateInformationLayout from "./containers/layout/UpdateInformationLayout";
+import BackendController from "./controller/BackendController";
+import AdminRouter from "./containers/router/AdminRouter";
 
+let backendController = new BackendController();
 
 class App extends Component {
     constructor(props) {
@@ -32,14 +35,7 @@ class App extends Component {
         return (
             <Router>
                 <div>
-                    <Route
-                        path="/admin"
-                        render={({match: {url}}) => (
-                            <>
-                                <Route path={`${url}/productRegister`} component={ProductRegister}/>
-                            </>
-                        )}
-                    />
+                    <Route path="/admin" component={AdminRouter}/>
                     <Route path='/registration' render={(props) => {
                         return (
                             <div>
@@ -50,7 +46,7 @@ class App extends Component {
                     }
                     }/>
                     <Route path='/updateInformation' render={(props) => {
-                        return(
+                        return (
                             <div>
                                 <MainLayout/>
                                 <UpdateInformationLayout/>
