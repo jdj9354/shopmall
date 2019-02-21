@@ -45,6 +45,10 @@ html {
     margin-top: 40px;
 }
 
+.detail div{
+    margin-bottom: 3%;
+}
+
 .detail.is_fixed {
     padding-top: 67px;
 }
@@ -175,7 +179,7 @@ html {
     display: inline-block;
     display: inline;
     float: left;
-    width : 50%;
+    width : 30%;
 }
 
 #detailSideDiv #divBuy {
@@ -194,4 +198,10 @@ html {
     padding: 10px;
     font-size: 16px;
     text-align: center;
+}
+
+
+.lastSpace {
+    width:100%;
+    padding:50%;
 }
