@@ -72,23 +72,23 @@ class DetailLayout extends Component {
                 });
             }
             return (
-                <div>
-                    <div class="mainProductContent">
-                        <span class="brief">
-                            <div class="brief_images">
+                <div className="DetailLayout">
+                    <div className="mainProductContent">
+                        <span className="brief">
+                            <div className="brief_images">
                                 <ImageGallery items={images} showFullscreenButton={false} showPlayButton={false}
                                               autoPlay={true}/>
                             </div>
-                            <div class="thumbnail_div">
+                            <div className="thumbnail_div">
                                 <img id="thumbnailImage" src={this.state.data.thumbnailImageSrc}/>
                                 <pre>{this.state.data.thumbnailDescription}</pre>
                             </div>
                         </span>
-                        <div class="detail">
-                            <div class="quick_nav_wrap">
+                        <div className="detail">
+                            <div className="quick_nav_wrap">
                                 <ul>
                                     <li>
-                                        <div><a href="#detail_product" class="selected">PRODUCT</a></div>
+                                        <div><a href="#detail_product" className="selected">PRODUCT</a></div>
                                     </li>
                                     <li>
                                         <div><a href="#detail_review">REVIEW</a></div>
@@ -199,8 +199,8 @@ class DetailLayout extends Component {
                             {this.state.data.name}
                         </h3>
                         <div id="itemInfo">
-                            <div class="itemInfoRow">
-                                <div class="itemInfoRowName">제품 코드</div>
+                            <div className="itemInfoRow">
+                                <div className="itemInfoRowName">제품 코드</div>
                                 {this.state.data._id}
                             </div>
                             <div className="itemInfoRow">
