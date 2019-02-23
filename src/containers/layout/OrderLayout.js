@@ -4,7 +4,7 @@ import Process from "../element/Process";
 import Payment from "../element/Payment";
 import BackendController from "../../controller/BackendController";
 import AuthManager from "../../auth/AuthManager";
-import { Redirect } from "react-router-dom";
+import {Redirect} from "react-router-dom";
 
 let beController = new BackendController();
 
@@ -16,13 +16,14 @@ class OrderLayout extends Component {
         let itemsArray;
         if (!props.itemsArray) {
             itemsArray = JSON.parse(localStorage.getItem("lastBasketItem"));
-            if(!itemsArray)
+            if (!itemsArray)
                 itemsArray = [];
-        }
-        else
+        } else
             itemsArray = props.itemsArray
 
         this.state = {
+            payerInfo: {},
+            addressInfo: {},
             itemsArray: itemsArray,
             totalPrice: 0
         };
@@ -228,9 +229,9 @@ class OrderLayout extends Component {
                                     <lable>주소</lable>
                                 </th>
                                 <td className="locationInput">
-                                    <input className="normalLine" type="text"maxLength="6" readonly=""/>
+                                    <input className="normalLine" type="text" maxLength="6" readonly=""/>
                                     <a className="normalLine">주소찾기</a>
-                                    <input className="blockLine" type="text"maxLength="200" readonly=""/>
+                                    <input className="blockLine" type="text" maxLength="200" readonly=""/>
                                     <input className="blockLine" type="text" maxLength="200"/>
                                 </td>
                             </tr>
@@ -274,7 +275,8 @@ class OrderLayout extends Component {
                     <h3>결제 방법 선택</h3>
                     <br></br>
                     <div>
-                        <Payment/>
+                        <Payment payerInfo={this.state.payerInfo} addressInfo={this.state.addressInfo}
+                                 totalPrice={this.state.totalPrice} itemsArray={this.state.itemsArray}/>
                     </div>
                 </div>
             </div>

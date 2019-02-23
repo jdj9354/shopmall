@@ -50,7 +50,7 @@ class BackendController {
     async getItem(productId) {
         let result = await this.requestAPI(Constants.backend + '/api/product/getItem/' + productId, {}, "GET");
         let product = await result.json();
-        console.log(product)
+
         if (result.ok && product) {
             if (!product.thumbnailImageSrc.startsWith("http")) {
                 product.thumbnailImageSrc = Constants.backend + product.thumbnailImageSrc;
@@ -107,6 +107,15 @@ class BackendController {
         let result = await this.requestAPI(Constants.backend + '/api/order/readOrder', param, "POST");
 
         if (result.ok)
+            return await result.json();
+        else
+            return Promise.reject(result.json());
+    }
+
+    async getPaypalAccessToken(){
+        let result = await this.requestAPI(Constants.backend+'/api/order/getPaypalAccessToken',{},"POST");
+
+        if(result.ok)
             return await result.json();
         else
             return Promise.reject(result.json());
