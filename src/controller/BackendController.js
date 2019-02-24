@@ -42,8 +42,7 @@ class BackendController {
                 })
             })
             return result;
-        }
-        else
+        } else
             return Promise.reject(result.json());
     }
 
@@ -74,8 +73,7 @@ class BackendController {
                 count++;
             })
             return product;
-        }
-        else
+        } else
             return Promise.reject(product);
     }
 
@@ -86,6 +84,15 @@ class BackendController {
             return await result.json();
         else
             return Promise.reject(result.json());
+    }
+
+    async saveOrder(user, order) {
+        let result = await this.requestAPI(Constants.backend + '/api/order/insertOrder', {user: user, order: order}, "POST");
+
+        if(result.ok)
+            return await result.json();
+        else
+            return null;
     }
 
     async getOrderList(user, startDate, endDate, page, pageLimit) {
@@ -112,10 +119,10 @@ class BackendController {
             return Promise.reject(result.json());
     }
 
-    async getPaypalAccessToken(){
-        let result = await this.requestAPI(Constants.backend+'/api/order/getPaypalAccessToken',{},"POST");
+    async getPaypalAccessToken() {
+        let result = await this.requestAPI(Constants.backend + '/api/order/getPaypalAccessToken', {}, "POST");
 
-        if(result.ok)
+        if (result.ok)
             return await result.json();
         else
             return Promise.reject(result.json());

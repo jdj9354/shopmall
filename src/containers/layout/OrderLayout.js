@@ -276,7 +276,8 @@ class OrderLayout extends Component {
                     <br></br>
                     <div>
                         <Payment payerInfo={this.state.payerInfo} addressInfo={this.state.addressInfo}
-                                 totalPrice={this.state.totalPrice} itemsArray={this.state.itemsArray}/>
+                                 shippingFee={{price:5000,priceUnit:"원"}} totalPrice={this.state.totalPrice}
+                                 itemsArray={this.state.itemsArray}/>
                     </div>
                 </div>
             </div>
