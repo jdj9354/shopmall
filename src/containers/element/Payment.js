@@ -129,7 +129,7 @@ class Payment extends Component {
                                                     payer: payer
                                                 }
 
-                                                let requestResult = await backendController.requestAPI(backend + '/api/order/onPurchaseRequestFromPayPal', requestParam, "POST");
+                                                let requestResult = await backendController.requestAPI('/api/order/onPurchaseRequestFromPayPal', requestParam, "POST");
                                                 if (requestResult.status == 200) {
                                                     //requestResult = await requestResult.json();
                                                     links.map((link) => {
