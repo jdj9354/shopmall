@@ -42,14 +42,14 @@ class BackendController {
                 })
             })
             return result;
-        }
-        else
+        } else
             return Promise.reject(result.json());
     }
 
     async getItem(productId) {
         let result = await this.requestAPI('/api/product/getItem/' + productId, {}, "GET");
         let product = await result.json();
+
         if (result.ok && product) {
             if (!product.thumbnailImageSrc.startsWith("http")) {
                 product.thumbnailImageSrc = Constants.backend + product.thumbnailImageSrc;
@@ -76,6 +76,7 @@ class BackendController {
         }
         else
             return null;
+
     }
 
     async getItems(productIds) {
@@ -85,6 +86,15 @@ class BackendController {
             return await result.json();
         else
             return Promise.reject(result.json());
+    }
+
+    async saveOrder(user, order) {
+        let result = await this.requestAPI(Constants.backend + '/api/order/insertOrder', {user: user, order: order}, "POST");
+
+        if(result.ok)
+            return await result.json();
+        else
+            return null;
     }
 
     async getOrderList(user, startDate, endDate, page, pageLimit) {
@@ -104,6 +114,15 @@ class BackendController {
             page_limit: pageLimit
         }
         let result = await this.requestAPI('/api/order/readOrder', param, "POST");
+
+        if (result.ok)
+            return await result.json();
+        else
+            return Promise.reject(result.json());
+    }
+
+    async getPaypalAccessToken() {
+        let result = await this.requestAPI(Constants.backend + '/api/order/getPaypalAccessToken', {}, "POST");
 
         if (result.ok)
             return await result.json();

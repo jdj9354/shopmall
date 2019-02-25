@@ -14,9 +14,12 @@ import PurchaseLayout from "./containers/layout/PurchaseLayout";
 import MyPageLayout from "./containers/layout/MyPageLayout";
 import SearchResult from "./containers/layout/SearchResult";
 import ProductRegister from "./containers/layout/ProductRegister";
+import PurchaseSuccessLayout from "./containers/layout/PurchaseSuccessLayout";
+import PurchaseFailLayout from "./containers/layout/PurchaseFailLayout";
 import UpdateInformationLayout from "./containers/layout/UpdateInformationLayout";
 import BackendController from "./controller/BackendController";
 import AdminRouter from "./containers/router/AdminRouter";
+
 
 let backendController = new BackendController();
 
@@ -107,7 +110,22 @@ class App extends Component {
                         }
                     }
                     }/>
-
+                    <Route path='/purchaseSuccess' render={(props) => {
+                        return(
+                            <div>
+                               <MainLayout/>
+                               <PurchaseSuccessLayout/>
+                            </div>
+                        )
+                    }}/>
+                    <Route path='/purchaseFail' render={(props) => {
+                        return(
+                            <div>
+                                <MainLayout/>
+                                <PurchaseFailLayout/>
+                            </div>
+                        )
+                    }}/>
                     <Route path='/purchaseList' render={(props) => {
                         return (
                             <div>
