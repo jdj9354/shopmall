@@ -111,41 +111,40 @@ class DetailLayout extends Component {
                             <div id="detail_review">
                                 리뷰
                                 <div>
-                                리뷰테스트<br></br>
-                                리뷰테스트<br></br>
-                                리뷰테스트<br></br>
-                                리뷰테스트<br></br>
-                                리뷰테스트<br></br>
-                                리뷰테스트<br></br> 리뷰테스트<br></br>
-                                리뷰테스트<br></br>
-                                리뷰테스트<br></br>
-                                리뷰테스트<br></br>
-                                리뷰테스트<br></br>
-                                리뷰테스트<br></br>
-                                리뷰테스트<br></br> 리뷰테스트<br></br>
-                                리뷰테스트<br></br>
-                                리뷰테스트<br></br>
-                                리뷰테스트<br></br>
-                                리뷰테스트<br></br>
-                                리뷰테스트<br></br>
-                                리뷰테스트<br></br>
+                                    리뷰테스트<br></br>
+                                    리뷰테스트<br></br>
+                                    리뷰테스트<br></br>
+                                    리뷰테스트<br></br>
+                                    리뷰테스트<br></br>
+                                    리뷰테스트<br></br> 리뷰테스트<br></br>
+                                    리뷰테스트<br></br>
+                                    리뷰테스트<br></br>
+                                    리뷰테스트<br></br>
+                                    리뷰테스트<br></br>
+                                    리뷰테스트<br></br>
+                                    리뷰테스트<br></br> 리뷰테스트<br></br>
+                                    리뷰테스트<br></br>
+                                    리뷰테스트<br></br>
+                                    리뷰테스트<br></br>
+                                    리뷰테스트<br></br>
+                                    리뷰테스트<br></br>
+                                    리뷰테스트<br></br>
                                 </div>
                             </div>
                             <div id="detail_qa">
                                 Q&A
-                                <div>
-                                QA테스트<br></br>
-                                QA테스트<br></br>
-                                QA테스트<br></br>
-                                QA테스트<br></br>
-                                QA테스트<br></br>
-                                QA테스트<br></br>
-                                QA테스트<br></br>
-                                QA테스트<br></br>
-                                QA테스트<br></br>
-                                QA테스트<br></br>
-                                QA테스트<br></br>
-                                QA테스트<br></br>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">문의 유형</th>
+                                            <th scope="col">문의/답변</th>
+                                            <th scope="col">작성자</th>
+                                            <th scope="col">작성일</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                                <div id="button_product_qna">
+                                    <a>상품 문의하기</a>
                                 </div>
                             </div>
                             <div id="detail_refund_exchange">
