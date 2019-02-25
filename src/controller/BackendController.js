@@ -4,7 +4,7 @@ import * as Constants from "../Constants";
 class BackendController {
 
     async registerProduct(productJson) {
-        let result = await this.requestAPI(Constants.backend + '/api/product/registerProduct', productJson, "POST");
+        let result = await this.requestAPI('/api/product/registerProduct', productJson, "POST");
 
         if (result.ok)
             return await result.json();
@@ -13,7 +13,7 @@ class BackendController {
     }
 
     async getAllItem() {
-        let result = await this.requestAPI(Constants.backend + '/api/product/getAllItem', {}, "POST");
+        let result = await this.requestAPI('/api/product/getAllItem', {}, "POST");
         if (result.ok) {
 
             result = await result.json();
@@ -47,7 +47,7 @@ class BackendController {
     }
 
     async getItem(productId) {
-        let result = await this.requestAPI(Constants.backend + '/api/product/getItem/' + productId, {}, "GET");
+        let result = await this.requestAPI('/api/product/getItem/' + productId, {}, "GET");
         let product = await result.json();
 
         if (result.ok && product) {
@@ -73,12 +73,14 @@ class BackendController {
                 count++;
             })
             return product;
-        } else
-            return Promise.reject(product);
+        }
+        else
+            return null;
+
     }
 
     async getItems(productIds) {
-        let result = await this.requestAPI(Constants.backend + '/api/product/getItems', {product_ids: productIds}, "POST");
+        let result = await this.requestAPI('/api/product/getItems', {product_ids: productIds}, "POST");
 
         if (result.ok)
             return await result.json();
@@ -111,7 +113,7 @@ class BackendController {
             page: page,
             page_limit: pageLimit
         }
-        let result = await this.requestAPI(Constants.backend + '/api/order/readOrder', param, "POST");
+        let result = await this.requestAPI('/api/order/readOrder', param, "POST");
 
         if (result.ok)
             return await result.json();
@@ -129,7 +131,7 @@ class BackendController {
     }
 
     async requestRegisterUser(userInfo) {
-        let result = await this.requestAPI(Constants.backend + '/api/auth/registerUser', userInfo, "POST");
+        let result = await this.requestAPI('/api/auth/registerUser', userInfo, "POST");
 
         if (result.ok)
             return await result.json();
@@ -143,7 +145,7 @@ class BackendController {
             page: page,
             pageLimit: pageLimit
         };
-        let result = await this.requestAPI(Constants.backend + '/api/search/product', param, "POST");
+        let result = await this.requestAPI('/api/search/product', param, "POST");
 
         if (result.ok)
             return await result.json();

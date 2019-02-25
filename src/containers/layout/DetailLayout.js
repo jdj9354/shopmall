@@ -72,23 +72,23 @@ class DetailLayout extends Component {
                 });
             }
             return (
-                <div>
-                    <div class="mainProductContent">
-                        <span class="brief">
-                            <div class="brief_images">
+                <div className="DetailLayout">
+                    <div className="mainProductContent">
+                        <span className="brief">
+                            <div className="brief_images">
                                 <ImageGallery items={images} showFullscreenButton={false} showPlayButton={false}
                                               autoPlay={true}/>
                             </div>
-                            <div class="thumbnail_div">
+                            <div className="thumbnail_div">
                                 <img id="thumbnailImage" src={this.state.data.thumbnailImageSrc}/>
                                 <pre>{this.state.data.thumbnailDescription}</pre>
                             </div>
                         </span>
-                        <div class="detail">
-                            <div class="quick_nav_wrap">
+                        <div className="detail">
+                            <div className="quick_nav_wrap">
                                 <ul>
                                     <li>
-                                        <div><a href="#detail_product" class="selected">PRODUCT</a></div>
+                                        <div><a href="#detail_product" className="selected">PRODUCT</a></div>
                                     </li>
                                     <li>
                                         <div><a href="#detail_review">REVIEW</a></div>
@@ -109,6 +109,8 @@ class DetailLayout extends Component {
                                 }
                             </div>
                             <div id="detail_review">
+                                리뷰
+                                <div>
                                 리뷰테스트<br></br>
                                 리뷰테스트<br></br>
                                 리뷰테스트<br></br>
@@ -127,8 +129,11 @@ class DetailLayout extends Component {
                                 리뷰테스트<br></br>
                                 리뷰테스트<br></br>
                                 리뷰테스트<br></br>
+                                </div>
                             </div>
                             <div id="detail_qa">
+                                Q&A
+                                <div>
                                 QA테스트<br></br>
                                 QA테스트<br></br>
                                 QA테스트<br></br>
@@ -141,6 +146,7 @@ class DetailLayout extends Component {
                                 QA테스트<br></br>
                                 QA테스트<br></br>
                                 QA테스트<br></br>
+                                </div>
                             </div>
                             <div id="detail_refund_exchange">
                                 반품/교환 정보
@@ -185,6 +191,7 @@ class DetailLayout extends Component {
                                     </tbody>
                                 </table>
                             </div>
+                            <div className={"lastSpace"}/>
                         </div>
                     </div>
                     <div id="detailSideDiv">
@@ -192,8 +199,8 @@ class DetailLayout extends Component {
                             {this.state.data.name}
                         </h3>
                         <div id="itemInfo">
-                            <div class="itemInfoRow">
-                                <div class="itemInfoRowName">제품 코드</div>
+                            <div className="itemInfoRow">
+                                <div className="itemInfoRowName">제품 코드</div>
                                 {this.state.data._id}
                             </div>
                             <div className="itemInfoRow">
@@ -267,6 +274,7 @@ class DetailLayout extends Component {
         let mainProductContentElem = document.getElementsByClassName("mainProductContent")[0];
         let detailElem = document.getElementsByClassName("detail")[0];
         let detailList = document.getElementById("detail_list");
+        let quickNavWrap = document.getElementsByClassName("quick_nav_wrap")[0];
         if (window.scrollY >= mainProductContentElem.offsetTop + detailElem.offsetTop) {
             detailElem.classList.add('is_fixed');
         } else {
@@ -285,25 +293,25 @@ class DetailLayout extends Component {
         let product_end = product_start + detail_product.offsetHeight;
 
         let review_start = mainProductContentElem.offsetTop + detailElem.offsetTop + detail_review.offsetTop;
-        let review_end = review_start + detail_review.offsetHeight / 2;
+        let review_end = review_start + detail_review.offsetHeight;
 
         let qa_start = mainProductContentElem.offsetTop + detailElem.offsetTop + detail_qa.offsetTop;
-        let qa_end = qa_start + detail_qa.offsetHeight / 2;
+        let qa_end = qa_start + detail_qa.offsetHeight;
 
         let refund_start = mainProductContentElem.offsetTop + detailElem.offsetTop + detail_refund_exchange.offsetTop;
-        let refund_end = refund_start + detail_refund_exchange.offsetHeight / 2;
+        let refund_end = refund_start + detail_refund_exchange.offsetHeight;
 
         let prevSelected_detail_item = selected_detail_item;
-        let judgeLine = window.scrollY + window.screen.height;
+        let judgeLine = window.scrollY + quickNavWrap.offsetHeight;
 
         if (judgeLine < product_end) {
             selected_detail_item = 0;
-        } else if (judgeLine >= review_start && window.scrollY < review_end) {
+        } else if (judgeLine >= review_start && judgeLine < review_end) {
             selected_detail_item = 1;
 
-        } else if (judgeLine >= qa_start && window.scrollY < qa_end) {
+        } else if (judgeLine >= qa_start && judgeLine < qa_end) {
             selected_detail_item = 2;
-        } else if (judgeLine >= refund_start && window.scrollY < refund_end) {
+        } else if (judgeLine >= refund_start && judgeLine < refund_end) {
             selected_detail_item = 3;
 
         }

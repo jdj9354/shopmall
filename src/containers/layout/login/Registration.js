@@ -24,14 +24,14 @@ class Registration extends Component {
             gender: {text: "", isValid: false},
         };
 
-        request.get(Constants.backend + '/menu/tos')
+        request.get('/api/menu/tos')
             .end((err, data) => {
                 if (err) {
                     console.error(err)
                     return
                 }
                 this.setState({tos: data.body.tos})
-                request.get(Constants.backend + '/menu/personalInformation')
+                request.get('/api/menu/personalInformation')
                     .end((err, data) => {
                         if (err) {
                             console.error(err)
@@ -305,7 +305,7 @@ class Registration extends Component {
                                 window.alert("가입을 환영합니다");
 
                                 var xhr = new XMLHttpRequest();
-                                xhr.open("POST", Constants.backend + "/auth/login");
+                                xhr.open("POST", "/api/auth/login");
                                 xhr.onload = function (event) {
                                     let response = JSON.parse(event.target.response);
                                     response = JSON.parse(response.body);

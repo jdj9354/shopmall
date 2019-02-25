@@ -31,7 +31,7 @@ class MainLayout extends Component {
 
 
     getSideMenuList() {
-        request.get(Constants.backend + '/menu/side')
+        request.get('/api/menu/side')
             .end((err, data) => {
                 if (err) {
                     console.error(err)

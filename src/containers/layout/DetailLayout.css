@@ -3,7 +3,7 @@
 html {
     scroll-behavior: smooth;
 }
-.mainProductContent {
+.DetailLayout .mainProductContent {
     width: 75%;
     margin-top: 8%;
     margin-left: 15%;
@@ -11,45 +11,49 @@ html {
     position: absolute;
 }
 
-.brief {
+.DetailLayout .brief {
     width: 75%;
 
 }
 
-.brief .brief_images {
+.DetailLayout .brief .brief_images {
     width: 75%;
     display: inline-block;
 }
 
-.brief .thumbnail_div {
+.DetailLayout .brief .thumbnail_div {
     position: absolute;
     margin-left: 3%;
     width: 20%;
     display: inline-block;
 }
 
-.brief .thumbnail_div img {
+.DetailLayout .brief .thumbnail_div img {
     max-width: 100%;
     max-height: 100%;
 }
 
-.brief .thumbnail_div pre {
+.DetailLayout .brief .thumbnail_div pre {
     font-size: 12px;
     line-height: 1.25;
     color: rgb(0, 0, 0);
     font-family: "Noto Sans", "Noto Sans KR", "Nanum Gothic", 나눔고딕, sans-serif;
 }
 
-.detail {
+.DetailLayout .detail {
     position: relative;
     margin-top: 40px;
 }
 
-.detail.is_fixed {
+.DetailLayout .detail div{
+    margin-bottom: 3%;
+}
+
+.DetailLayout .detail.is_fixed {
     padding-top: 67px;
 }
 
-.quick_nav_wrap li div a{
+.DetailLayout .quick_nav_wrap li div a{
     background-color: white;
     color: black;
     padding: 3%;
@@ -57,61 +61,61 @@ html {
     width: 100%;
 }
 
-.quick_nav_wrap li div a.selected {
+.DetailLayout .quick_nav_wrap li div a.selected {
     background-color: var(--main-color);
     color: white;
 }
 
-.detail .quick_nav_wrap {
+.DetailLayout .detail .quick_nav_wrap {
     position: relative;
     background-color: white;
 }
 
-.detail.is_fixed .quick_nav_wrap {
+.DetailLayout .detail.is_fixed .quick_nav_wrap {
     position: fixed;
     top: 0;
     width: 75%;
 }
 
-.detail ul {
+.DetailLayout .detail ul {
     padding: 0;
     border-top: 1px solid #000;
     list-style: none;
 }
 
-.detail ul li {
+.DetailLayout .detail ul li {
     width: 25%;
     position: relative;
     display: inline-block;
     cursor: pointer;
 }
 
-.detail ul li div {
+.DetailLayout .detail ul li div {
     text-align: center;
 }
 
-.detail div img {
+.DetailLayout .detail div img {
     margin-top: 3%;
     width: 100%;
 }
 
-.detail table{
+.DetailLayout .detail table{
     margin-top: 20px;
     margin-bottom: 20px;
 }
 
-.detail #detail_refund_exchange tbody th {
+.DetailLayout .detail #detail_refund_exchange tbody th {
     width:20%;
     padding-left: 4%;
     padding-right: 4%;
     background: #f5f5f5;
 }
 
-.detail #detail_refund_exchange tbody td {
+.DetailLayout .detail #detail_refund_exchange tbody td {
     padding-left: 10px;
 }
 
-#detailSideDiv {
+.DetailLayout #detailSideDiv {
 
     z-index: 100;
     width: 20%;
@@ -121,18 +125,18 @@ html {
     position: fixed;
 }
 
-#detailSideDiv h3 {
+.DetailLayout #detailSideDiv h3 {
     margin-left: 5%;
 }
 
-#detailSideDiv #purchaseButtons {
+.DetailLayout #detailSideDiv #purchaseButtons {
     font-weight: bold;
     width: 70%;
     margin-left: 5%;
     cursor: pointer;
 }
 
-#detailSideDiv .itemNumber{
+.DetailLayout #detailSideDiv .itemNumber{
     width:50%;
     margin-left: 5%;
 }
@@ -142,43 +146,43 @@ html {
     width:50%
 }
 
-#detailSideDiv .itemNumber div input{
+.DetailLayout #detailSideDiv .itemNumber div input{
     margin-left:70%;
     width:100%;
 }
 
-#detailSideDiv #itemOptions {
+.DetailLayout #detailSideDiv #itemOptions {
     margin: 5%;
     width: 70%;
 }
 
-#detailSideDiv #itemInfo .itemInfoRow {
+.DetailLayout #detailSideDiv #itemInfo .itemInfoRow {
     margin: 5%;
 }
 
-#detailSideDiv #itemInfo .itemInfoRowName {
+.DetailLayout #detailSideDiv #itemInfo .itemInfoRowName {
     width: 50%;
 }
 
 
-#detailSideDiv #itemInfo .itemInfoRow div {
+.DetailLayout #detailSideDiv #itemInfo .itemInfoRow div {
     display: inline-block;
     display: inline;
     float: left;
 }
 
-#detailSideDiv .finalPrice{
+.DetailLayout #detailSideDiv .finalPrice{
     margin:5%;
 }
 
-#detailSideDiv .finalPrice div{
+.DetailLayout #detailSideDiv .finalPrice div{
     display: inline-block;
     display: inline;
     float: left;
-    width : 50%;
+    width : 30%;
 }
 
-#detailSideDiv #divBuy {
+.DetailLayout #detailSideDiv #divBuy {
     background-color: var(--main-color);
     color: #fff;
     height: 3%;
@@ -187,11 +191,17 @@ html {
     text-align: center;
 }
 
-#detailSideDiv #basketDiv {
+.DetailLayout #detailSideDiv #basketDiv {
     border: 1px solid;
     border-color: var(--main-color);
     height: 3%;
     padding: 10px;
     font-size: 16px;
     text-align: center;
+}
+
+
+.DetailLayout .lastSpace {
+    width:100%;
+    padding:50%;
 }
