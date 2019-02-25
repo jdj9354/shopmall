@@ -89,7 +89,7 @@ class BackendController {
     }
 
     async saveOrder(user, order) {
-        let result = await this.requestAPI(Constants.backend + '/api/order/insertOrder', {user: user, order: order}, "POST");
+        let result = await this.requestAPI('/api/order/insertOrder', {user: user, order: order}, "POST");
 
         if(result.ok)
             return await result.json();
@@ -122,7 +122,7 @@ class BackendController {
     }
 
     async getPaypalAccessToken() {
-        let result = await this.requestAPI(Constants.backend + '/api/order/getPaypalAccessToken', {}, "POST");
+        let result = await this.requestAPI('/api/order/getPaypalAccessToken', {}, "POST");
 
         if (result.ok)
             return await result.json();
