@@ -6,6 +6,8 @@ import BackendController from "../../../controller/BackendController";
 import * as Util from "../../../Util";
 import AuthManager from "../../../auth/AuthManager";
 
+let authManager = new AuthManager();
+
 class Registration extends Component {
     constructor(props) {
         super(props);
@@ -40,6 +42,10 @@ class Registration extends Component {
                         this.setState({pi: data.body.pi})
                     });
             });
+    }
+
+    async componentDidMount() {
+        authManager.init();
     }
 
     handleChange = event => {
@@ -310,7 +316,7 @@ class Registration extends Component {
                                     let response = JSON.parse(event.target.response);
                                     response = JSON.parse(response.body);
                                     var expireDate = Util.dateFromISO8601(response.expires_in);
-                                    new AuthManager().setAuthInfo(response.user, response.access_token, response.refresh_token, expireDate);
+                                    authManager.setAuthInfo(response.user, response.access_token, response.refresh_token, expireDate,"basic");
 
                                     window.location.href = returnUrl;
                                 };

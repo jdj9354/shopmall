@@ -1,19 +1,48 @@
 import * as Util from '../Util';
 import * as Constants from "../Constants";
 
+
+let facebook_oauth_clientID = "806579793042911";
+let facebook_api_version = "v3.2";
+
 class AuthManager {
+    async init() {
+        await this.loadFacebookSDK();
+        return;
+    }
+
     async getAuthInfo() {
+
         let accessToken = this.getCookie("access_token");
         let refreshToken = this.getCookie("refresh_token");
+
         if (accessToken) {
-            return await new Promise((resolve) => {
-                    resolve({
-                            user: localStorage.getItem("activeUser"),
-                            token: accessToken
+            let authType = localStorage.getItem("authType");
+            if (authType == "facebook") {
+                let loginCheckPromise = new Promise((resolve, reject) => {
+                    if (!window.FB)
+                        resolve();
+                    window.FB.getLoginStatus(async (response) => {
+                            if (response.status == "unknown")
+                                await this.setAuthInfo("guest", null, null, 0, "basic");
+                            resolve();
                         }
                     )
-                }
-            );
+                });
+                await loginCheckPromise;
+            }
+            let returnPromise = (new Promise((resolve) => {
+                resolve({
+                        user: localStorage.getItem("activeUser"),
+                        authType: localStorage.getItem("authType"),
+                        token: accessToken
+                    }
+                )
+            }));
+            let result = await returnPromise.then((res) => {
+                return res;
+            });
+            return result;
 
         } else {
             if (refreshToken) {
@@ -33,6 +62,7 @@ class AuthManager {
 
                 return {
                     user: localStorage.getItem("activeUser"),
+                    authType: localStorage.getItem("authType"),
                     token: authInfo.access_token
                 };
 
@@ -52,19 +82,55 @@ class AuthManager {
                 //     }
                 // }
             } else {
-                return await new Promise((resolve) => {
-                    resolve({user: "guest"})
-                });
+                let authType = localStorage.getItem("authType");
+                if (authType == "facebook") {
+                    let loginCheckPromise = new Promise((resolve, reject) => {
+                        window.FB.getLoginStatus(async (response) => {
+                                switch (response.status) {
+                                    case "connected" :
+                                    case "not_authorized" :
+                                        (this.loginWithFaceBook())
+                                            .then(() => {
+                                                window.location = "/";
+                                            })
+                                            .catch(() => {
+                                                window.alert("로그인에 실패하였습니다");
+                                            });
+                                        break;
+                                    case "unknown" :
+                                        await this.setAuthInfo("guest", null, null, 0, "basic");
+                                        break;
+                                }
+                                resolve({
+                                    user: localStorage.getItem("activeUser"),
+                                    authType: localStorage.getItem("authType"),
+                                    token: this.getCookie("access_token")
+                                });
+                            }
+                        )
+                    })
+                    return await loginCheckPromise;
+
+                } else {
+                    let retPromise = new Promise((resolve,reject) => {
+                        resolve({user: "guest"});
+                    });
+                    let result = await retPromise;
+                    return result;
+                }
             }
         }
     }
 
-    setAuthInfo(user, accessToken, refreshToken, expireIn) {
+    async setAuthInfo(user, accessToken, refreshToken, expireIn, authType) {
         let accessTokenStr = document.cookie = "access_token=" + accessToken + "; expires=" + expireIn + "; path=/";
-        let refreshTokenStr = document.cookie = "refresh_token=" + refreshToken + ";expires= 31 Dec 9999 12:00:00 UTC; path=/";
-        localStorage.setItem("activeUser", user);
         document.cookie = accessTokenStr;
-        document.cookie = refreshTokenStr;
+        if (refreshToken) {
+            let refreshTokenStr = document.cookie = "refresh_token=" + refreshToken + ";expires= 31 Dec 9999 12:00:00 UTC; path=/";
+            document.cookie = refreshTokenStr;
+        }
+        localStorage.setItem("activeUser", user);
+        localStorage.setItem("authType", authType);
     }
 
     getCookie = (cname) => {
@@ -85,6 +151,69 @@ class AuthManager {
 
     deleteCookie = (name) => {
         document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    }
+
+    clearAuthInfo = async () => {
+        let authType = localStorage.getItem("authType");
+
+        this.deleteCookie("accessToken");
+        this.deleteCookie("refreshToken");
+
+        localStorage.setItem("activeUser", "guest");
+        localStorage.setItem("authType", "NA");
+    }
+
+    async loadFacebookSDK() {
+
+        let sdkObj = document.getElementById("fbSDK");
+
+        if (sdkObj)
+            return;
+        let loadPromise = new Promise((resolve, reject) => {
+            (function (d, s, id) {
+                let js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) {
+                    return;
+                }
+
+                js = d.createElement(s);
+
+                js.id = id;
+                js.src = "https://connect.facebook.net/en_US/sdk.js";
+                fjs.parentNode.insertBefore(js, fjs);
+
+                window.fbAsyncInit = () => {
+                    window.FB.init({
+                        appId: facebook_oauth_clientID,
+                        cookie: true,
+                        xfbml: true,
+                        version: facebook_api_version
+                    });
+                    window.FB.AppEvents.logPageView();
+                    resolve();
+                };
+            }(document, 'script', 'facebook-jssdk'));
+            resolve();
+        });
+        await loadPromise;
+        return;
+    }
+
+    loginWithFaceBook() {
+        let loginResultPromise = new Promise((resolve, reject) => {
+            window.FB.login(async (response) => {
+                if (this.getAuthInfo().user != "guest") {
+                    if (response.status == 'connected') {
+                        let authResponse = response.authResponse;
+                        await this.setAuthInfo(authResponse.userID, authResponse.accessToken, null, authResponse.expiresIn, "facebook");
+                        resolve(true);
+                    } else {
+                        reject(false);
+                    }
+                }
+            });
+        });
+        return loginResultPromise;
     }
 }
 

@@ -2,15 +2,19 @@ import React, {Component} from 'react';
 import './MyPageLayout.css';
 import AuthManager from "../../auth/AuthManager";
 
+let authManager = new AuthManager();
+
 class MyPageLayout extends Component {
+    async componentDidMount() {
+        await authManager.init();
+    }
+
     render() {
         return (
             <div className="MyPageLayout">
                 <div>
                     <a className="on_toggle" onClick={async () => {
-                        let authManager = new AuthManager();
-                        authManager.deleteCookie("access_token");
-                        authManager.deleteCookie("refresh_token");
+                        await authManager.clearAuthInfo();
                         window.location.href = "/";
                     }}>로그 아웃</a>
                 </div>

@@ -34,7 +34,7 @@ class DetailLayout extends Component {
     async componentWillMount() {
         this.getProduct();
         window.addEventListener('scroll', this.handleScroll);
-    }
+    }w
 
     componentDidMount() {
 
