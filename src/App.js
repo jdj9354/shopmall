@@ -26,12 +26,18 @@ let backendController = new BackendController();
 class App extends Component {
     constructor(props) {
         super(props);
-        let authInfoPromise = new AuthManager().getAuthInfo();
+    }
+
+    async componentDidMount() {
+        let authManager = new AuthManager();
+        await authManager.init();
+        let authInfoPromise = authManager.getAuthInfo();
         authInfoPromise.then((authInfo) => {
             this.setState(({
                 authInfo: authInfo
             }))
-        })
+        });
+
     }
 
     render() {

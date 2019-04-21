@@ -2,8 +2,9 @@ import AuthManager from "../auth/AuthManager";
 
 class BasketController {
     async addBasketItem(id, optionName, num) {
-
-        let curUserInfo = await new AuthManager().getAuthInfo();
+        let authManager = new AuthManager();
+        await authManager.init();
+        let curUserInfo = await authManager.getAuthInfo();
         let curUserId = curUserInfo.user;
 
         let localBasketInfo = JSON.parse(localStorage.getItem("basket"));
@@ -28,9 +29,11 @@ class BasketController {
         }
     }
 
-    async removeBasketItem(id, optionName) {
+    removeBasketItem(id, optionName) {
 
-        let curUserInfo = await new AuthManager().getAuthInfo();
+        let authManager = new AuthManager();
+        authManager.init();
+        let curUserInfo = authManager.getAuthInfo();
         let curUserId = curUserInfo.user;
 
         let localBasketInfo = JSON.parse(localStorage.getItem("basket"));
@@ -45,9 +48,11 @@ class BasketController {
         }
     }
 
-    async emptyBasket() {
+    emptyBasket() {
 
-        let curUserInfo = await new AuthManager().getAuthInfo();
+        let authManager = new AuthManager();
+        authManager.init();
+        let curUserInfo = authManager.getAuthInfo();
         let curUserId = curUserInfo.user;
 
         let localBasketInfo = JSON.parse(localStorage.getItem("basket"));
@@ -64,8 +69,10 @@ class BasketController {
 
     }
 
-    async overrideAsGuestBasket(){
-        let curUserInfo = await new AuthManager().getAuthInfo();
+    overrideAsGuestBasket(){
+        let authManager = new AuthManager();
+        authManager.init();
+        let curUserInfo = authManager.getAuthInfo();
         let curUserId = curUserInfo.user;
 
         let localBasketInfo = JSON.parse(localStorage.getItem("basket"));
@@ -79,9 +86,13 @@ class BasketController {
 
     async getBasketItems() {
         let basketItemsArray = [];
+        let authManager = new AuthManager();
+        await authManager.init();
 
-        let curUserInfo = await new AuthManager().getAuthInfo();
+        let curUserInfo = await authManager.getAuthInfo();
         let curUserId = curUserInfo.user;
+        console.log(localStorage.getItem("basket"));
+
 
         if (!localStorage.getItem("basket"))
             localStorage.setItem("basket", JSON.stringify({}));

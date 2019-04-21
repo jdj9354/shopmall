@@ -13,20 +13,17 @@ class MainLayout extends Component {
         var json = {menu: []};
         this.state = {
             data: json,
-            user : "guest"
+            user: "empty"
         }
-
-        let authResult = new AuthManager().getAuthInfo();
-        authResult.then((authInfo) =>{
-                this.setState({user:authInfo.user})
-            })
-            .catch((e)=> {
-                this.setState({user:"guest"})
-            });
     }
 
-    componentWillMount() {
-        this.getSideMenuList()
+    async componentWillMount() {
+        this.getSideMenuList();
+        let authManager = new AuthManager();
+        await authManager.init();
+        let authResult = await authManager.getAuthInfo();
+        this.state.user = authResult.user;
+        this.forceUpdate();
     }
 
 
@@ -46,6 +43,9 @@ class MainLayout extends Component {
         let cartImagePath = require('../../res/icon_cart.png');
         let myIconImagePath = require('../../res/icon_my.png');
         let signinImagePath = require('../../res/icon_signin.png');
+        let emptyImagePath = require('../../res/empty.png');
+        console.log(this.state.user);
+        let isEmpty = (this.state.user == "empty");
         let isGuest = (this.state.user == "guest");
         return (
 
@@ -66,15 +66,20 @@ class MainLayout extends Component {
                     <div id="topNav">
                         <nav id="topNav">
                             <ul>
-                                {isGuest ? (
-                                    <li>
-                                        <a href="/login"><img src={signinImagePath}/></a>
+
+                                {isEmpty ? (<li>
+                                        <a href="/login"><img src={emptyImagePath}/></a>
                                     </li>
                                 ) : (
-                                    <li>
-                                        <a href="/mypage"><img src={myIconImagePath}/></a>
-                                    </li>
-                                )}
+                                    isGuest ? (
+                                        <li>
+                                            <a href="/login"><img src={signinImagePath}/></a>
+                                        </li>
+                                    ) : (
+                                        <li>
+                                            <a href="/mypage"><img src={myIconImagePath}/></a>
+                                        </li>
+                                    ))}
                                 <li>
                                     <a href="/cart"><img src={cartImagePath}/></a>
                                 </li>

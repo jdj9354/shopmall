@@ -18,16 +18,19 @@ class BasketLayout extends Component {
         };
     }
 
-    async componentWillMount() {
+
+    async componentDidMount() {
         let basketItemsArray = [];
 
         let basketItems = await new BasketController().getBasketItems();
+
         if(basketItems == null)
             return;
         let loadCount = 0;
         let totalPrice = this.state.totalPrice;
         basketItems.map(async (el) => {
             let product = await beController.getItem(el.id);
+
             if(product == null) {
                 loadCount++;
                 return;
@@ -235,11 +238,11 @@ class BasketLayout extends Component {
 
                                             for (let i = 0; i < checkboxes.length; i++) {
                                                 if (checkboxes[i].checked) {
-                                                    await new BasketController().removeBasketItem(checkboxes[i].parentElement.parentElement.dataset.id, checkboxes[i].parentElement.parentElement.dataset.option_name);
+                                                    new BasketController().removeBasketItem(checkboxes[i].parentElement.parentElement.dataset.id, checkboxes[i].parentElement.parentElement.dataset.option_name);
                                                 }
                                             }
 
-                                            if (await new BasketController().getBasketItems().length == 0)
+                                            if (new BasketController().getBasketItems().length == 0)
                                                 window.location.href = "/";
                                             else
                                                 window.location.href = "/cart";

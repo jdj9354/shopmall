@@ -161,6 +161,7 @@ class BackendController {
             let res = await fetch(endPoint,
                 {
                     headers: {
+
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
                     },

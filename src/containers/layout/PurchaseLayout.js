@@ -38,6 +38,10 @@ class PurchaseLayout extends Component {
 
     }
 
+    async componentDidMount() {
+        authManager.init();
+    }
+
     addMonths(date, n) {
         return new Date(date.setMonth(date.getMonth() + n));
     }
@@ -69,7 +73,7 @@ class PurchaseLayout extends Component {
     }
 
     async requestOrderList(page) {
-        let userInfo = await authManager.getAuthInfo();
+        let userInfo = authManager.getAuthInfo();
         let userId = userInfo.user;
         let requestResult = await backendController.getOrderList(userId,
             {

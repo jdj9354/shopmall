@@ -4,6 +4,10 @@ import * as Constants from '../../../Constants';
 import * as Util from '../../../Util';
 import {Link} from "react-router-dom";
 import AuthManager from "../../../auth/AuthManager";
+import {backend} from "../../../Constants";
+import BackendController from "../../../controller/BackendController";
+
+let authManager = new AuthManager();
 
 export default class Login extends Component {
 
@@ -15,6 +19,11 @@ export default class Login extends Component {
             forwarding: props.forwarding,
             onLoginSuccess: props.onLoginSuccess
         };
+    }
+
+    async componentDidMount() {
+        authManager.init();
+        //authManager.loadFacebookSDK();
     }
 
     validateForm() {
@@ -60,7 +69,7 @@ export default class Login extends Component {
                             //     password: new Buffer(this.state.password).toString('base64')
                             // });
                             let loginObj = this;
-                            var xhr = new XMLHttpRequest();
+                            let xhr = new XMLHttpRequest();
                             xhr.open("POST", "/api/auth/login");
                             xhr.onload = function (event) {
                                 let response = JSON.parse(event.target.response);
@@ -70,8 +79,8 @@ export default class Login extends Component {
                                     response = JSON.parse(event.target.response);
                                     let response = JSON.parse(response.body);
                                     var expireDate = Util.dateFromISO8601(response.expires_in);
-                                    new AuthManager().setAuthInfo(response.user, response.access_token, response.refresh_token, expireDate);
-                                    if(onLoginSuccess)
+                                    authManager.setAuthInfo(response.user, response.access_token, response.refresh_token, expireDate, "basic");
+                                    if (onLoginSuccess)
                                         onLoginSuccess();
                                     window.location.href = loginObj.state.forwarding;
                                 }
@@ -85,11 +94,20 @@ export default class Login extends Component {
                         }}>Login</a>
                     </div>
                     <div>
-                        <Link className="on_toggle" exact to={{pathname: "/registration", forwarding: forwarding}}>회원 가입</Link>
+                        <Link className="on_toggle" exact to={{pathname: "/registration", forwarding: forwarding}}>회원
+                            가입</Link>
                     </div>
                 </form>
                 <div className="sns_login_group">
-                    <img src={icon_fb}/>
+                    <img src={icon_fb} onClick={ async () => {
+                        (authManager.loginWithFaceBook())
+                            .then(() => {
+                                window.location.href = this.state.forwarding;
+                            })
+                            .catch(()=>{
+                                window.alert("로그인에 실패하였습니다");
+                            });
+                    }}/>
                     <img src={icon_insta}/>
                     <img src={icon_kakao}/>
                     <img src={icon_naver}/>
