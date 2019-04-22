@@ -144,7 +144,8 @@ class DetailLayout extends Component {
                                     </thead>
                                 </table>
                                 <div id="button_product_qna">
-                                    <a>상품 문의하기</a>
+                                    <a onClick={(ev) => {
+                                    }}>상품 문의하기</a>
                                 </div>
                             </div>
                             <div id="detail_refund_exchange">
