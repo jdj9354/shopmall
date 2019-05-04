@@ -30,6 +30,25 @@ class AuthManager {
                     )
                 });
                 await loginCheckPromise;
+            } else if (authType == "instagram") {
+                let tokenValidityCheckPromise = new Promise((resolve, reject) => {
+                    fetch("https://api.instagram.com/v1/users/self/?access_token=" + accessToken)
+                        .then(async (result) => {
+                            let resultJson = await result.json();
+                            if (resultJson.meta.code == 200) {
+                                resolve(true);
+                            } else {
+                                reject(false);
+                            }
+                        })
+                        .catch((exception) => {
+                            console.log(exception);
+                        });
+                });
+                let checkResult = await tokenValidityCheckPromise;
+
+                if (!checkResult)
+                    return null;
             }
             let returnPromise = (new Promise((resolve) => {
                 resolve({
@@ -112,7 +131,7 @@ class AuthManager {
                     return await loginCheckPromise;
 
                 } else {
-                    let retPromise = new Promise((resolve,reject) => {
+                    let retPromise = new Promise((resolve, reject) => {
                         resolve({user: "guest"});
                     });
                     let result = await retPromise;
