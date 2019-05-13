@@ -7,9 +7,11 @@ import ImageGallery from 'react-image-gallery';
 import 'react-image-gallery/styles/scss/image-gallery.scss';
 import "react-image-gallery/styles/css/image-gallery.css";
 import "react-image-gallery/styles/css/image-gallery.css";
-import AuthManager from "../../auth/AuthManager";
+import ReactDom from 'react-dom';
 import BasketController from "../../controller/BasketController";
 import BackendController from "../../controller/BackendController";
+import QnAPopup from "../popup/QnAPopup";
+import Popup from 'react-popup';
 
 
 let detail_product = null;
@@ -27,7 +29,8 @@ class DetailLayout extends Component {
         super(props);
         let json = {};
         this.state = {
-            data: json
+            data: json,
+            showQnaPopUp: false
         }
     }
 
@@ -73,6 +76,22 @@ class DetailLayout extends Component {
             }
             return (
                 <div className="DetailLayout">
+                    {
+                        this.state.showQnaPopUp ? (
+                                <div id="popupContainer" className="enabled">
+                                    <div id="popupBackground" onClick={() => {
+                                        this.setState({showQnaPopUp: false});
+                                    }
+                                    }></div>
+                                    <QnAPopup isEnabled={this.state.showQnaPopUp}/>
+                                </div>)
+                            : (
+                                <div id="popupContainer" className="disabled">
+                                    <div id="popupBackground"></div>
+                                    <QnAPopup isEnabled={this.state.showQnaPopUp}/>
+                                </div>)
+
+                    }
                     <div className="mainProductContent">
                         <span className="brief">
                             <div className="brief_images">
@@ -135,16 +154,17 @@ class DetailLayout extends Component {
                                 Q&A
                                 <table>
                                     <thead>
-                                        <tr>
-                                            <th scope="col">문의 유형</th>
-                                            <th scope="col">문의/답변</th>
-                                            <th scope="col">작성자</th>
-                                            <th scope="col">작성일</th>
-                                        </tr>
+                                    <tr>
+                                        <th scope="col">문의 유형</th>
+                                        <th scope="col">문의/답변</th>
+                                        <th scope="col">작성자</th>
+                                        <th scope="col">작성일</th>
+                                    </tr>
                                     </thead>
                                 </table>
                                 <div id="button_product_qna">
                                     <a onClick={(ev) => {
+                                        this.setState({showQnaPopUp: true});
                                     }}>상품 문의하기</a>
                                 </div>
                             </div>

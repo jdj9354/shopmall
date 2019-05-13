@@ -4,6 +4,33 @@ html {
     scroll-behavior: smooth;
 }
 
+.DetailLayout #popupContainer.enabled {
+    position: fixed;
+    z-index: 101;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.DetailLayout #popupContainer.disabled {
+    position: fixed;
+    display: none;
+    z-index: 99;
+    width: 100%;
+    height: 100%;
+}
+
+.DetailLayout .QnAPopup {
+    position: absolute;
+}
+
+.DetailLayout #popupContainer #popupBackground {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #55555580;
+}
+
 .DetailLayout .mainProductContent {
     width: 75%;
     margin-top: 8%;
