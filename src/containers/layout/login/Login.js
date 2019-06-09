@@ -99,16 +99,51 @@ export default class Login extends Component {
                     </div>
                 </form>
                 <div className="sns_login_group">
-                    <img src={icon_fb} onClick={ async () => {
+                    <img src={icon_fb} onClick={async () => {
                         (authManager.loginWithFaceBook())
                             .then(() => {
                                 window.location.href = this.state.forwarding;
                             })
-                            .catch(()=>{
+                            .catch(() => {
                                 window.alert("로그인에 실패하였습니다");
                             });
+
                     }}/>
-                    <img src={icon_insta}/>
+                    <img src={icon_insta} onClick={async (event) => {
+                        // let backendController = new BackendController();
+                        // let authResult = backendController.requestAPI("/api/auth/instagram",{},"POST");
+
+                        let instaAuthResult = await fetch("/api/auth/instagram",
+                            {
+                                header: {
+                                    'Access-Control-Allow-Origin:': "*",
+                                    'Accept': 'application/json',
+                                    'Content-Type': 'application/json'
+                                },
+                                method: 'POST'
+
+                            });
+                        let instaAuthWindow = window.open(instaAuthResult.url, 'windowNew', 'width=500, height=800');
+                        window.onLoginSuccess = (authInfo) => {
+                            let parsedAuthInfo = JSON.parse(authInfo);
+                            authManager.setAuthInfo(parsedAuthInfo.username, parsedAuthInfo.access_token, null, null, "instagram");
+                            window.location = "/";
+                        };
+
+                        // let xhr = new XMLHttpRequest();
+                        // xhr.open("POST", "/api/auth/instagram");
+                        // xhr.send();
+                        //
+                        // xhr.onload = function (event) {
+                        //     let response = event.target.response;
+                        //     console.log(response);
+                        //     if (response.statusCode != 302) {
+                        //         window.alert("Instagram 계정 정보를 확인해 주세요");
+                        //     } else {
+                        //         console.log(response);
+                        //     }
+                        // }
+                    }}/>
                     <img src={icon_kakao}/>
                     <img src={icon_naver}/>
                     <img src={icon_twitter}/>
