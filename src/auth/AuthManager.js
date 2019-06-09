@@ -65,15 +65,28 @@ class AuthManager {
 
         } else {
             if (refreshToken) {
+                let authType = localStorage.getItem("authType");
+                let authInfo;
 
-                let response = await fetch("/api/auth/renewToken", {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({refreshToken: refreshToken})
-                });
-                let authInfo = await response.json();
+                if (authType == "kakao") {
+                    let response = await fetch("/api/auth/kakao/token", {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            refresh_token: refreshToken
+                        })
+                    });
+                    authInfo = await response.json();
+                } else {
+                    let response = await fetch("/api/auth/renewToken", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({refreshToken: refreshToken})
+                    });
+                    authInfo = await response.json();
+                }
+
 
                 let accessTokenStr = document.cookie = "access_token=" + authInfo.access_token + "; expires=" + authInfo.accessTokenExpiresAt + "; path=/";
                 document.cookie = accessTokenStr;
@@ -174,6 +187,25 @@ class AuthManager {
 
     clearAuthInfo = async () => {
         let authType = localStorage.getItem("authType");
+        let accesToken = this.getCookie("access_token");
+
+        if (authType == "kakao") {
+            if (accesToken) {
+                // Not working code need to be updated
+                // window.alert(accesToken)
+                // let logoutResult = await fetch("https://kapi.kakao.com/v1/user/logout", {
+                //     mode: 'no-cors',
+                //     method: 'POST',
+                //     headers: {
+                //         'Accept': 'application/json',
+                //         'Content-Type': 'application/json',
+                //         'Access-Control-Allow-Origin': '*',
+                //         'Authorization': 'Bearer ' + accesToken
+                //     }
+                // });
+                // console.log(logoutResult);
+            }
+        }
 
         this.deleteCookie("accessToken");
         this.deleteCookie("refreshToken");
