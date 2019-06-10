@@ -79,7 +79,8 @@ export default class Login extends Component {
                                     response = JSON.parse(event.target.response);
                                     let response = JSON.parse(response.body);
                                     var expireDate = Util.dateFromISO8601(response.expires_in);
-                                    authManager.setAuthInfo(response.user, response.access_token, response.refresh_token, expireDate, "basic");
+                                    authManager.setAuthInfo(response.user, response.access_token,
+                                        response.refresh_token, expireDate, "basic");
                                     if (onLoginSuccess)
                                         onLoginSuccess();
                                     window.location.href = loginObj.state.forwarding;
@@ -123,10 +124,12 @@ export default class Login extends Component {
                                 method: 'POST'
 
                             });
-                        let instaAuthWindow = window.open(instaAuthResult.url, 'windowNew', 'width=500, height=800');
+                        let instaAuthWindow = window.open(instaAuthResult.url,
+                            'windowNew', 'width=500, height=800');
                         window.onLoginSuccess = (authInfo) => {
                             let parsedAuthInfo = JSON.parse(authInfo);
-                            authManager.setAuthInfo(parsedAuthInfo.username, parsedAuthInfo.access_token, null, null, "instagram");
+                            authManager.setAuthInfo(parsedAuthInfo.username,
+                                parsedAuthInfo.access_token, null, null, "instagram");
                             window.location = "/";
                         };
 
@@ -144,7 +147,26 @@ export default class Login extends Component {
                         //     }
                         // }
                     }}/>
-                    <img src={icon_kakao}/>
+                    <img src={icon_kakao} onClick={async (event) => {
+                        let kakaoAuthResult = await fetch("/api/auth/kakao",
+                            {
+                                header: {
+                                    'Access-Control-Allow-Origin:': "*",
+                                    'Accept': 'application/json',
+                                    'Content-Type': 'application/json'
+                                },
+                                method: 'POST'
+                            });
+                        let kakaoAuthWindow = window.open(kakaoAuthResult.headers.get('location'), 'windowNew',
+                            'width=500, height=800');
+                        window.onLoginSuccess = (authInfo) => {
+                            let parsedAuthInfo = JSON.parse(authInfo);
+                            window.alert(parsedAuthInfo.access_token);
+                            authManager.setAuthInfo(null, parsedAuthInfo.access_token,
+                                parsedAuthInfo.refresh_token, parsedAuthInfo.expires_in, "kakao");
+                            window.location = "/";
+                        };
+                    }}/>
                     <img src={icon_naver}/>
                     <img src={icon_twitter}/>
                 </div>
